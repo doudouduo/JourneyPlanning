@@ -1,8 +1,6 @@
 package com.innovation.journeyplanning.service;
 
-import com.innovation.journeyplanning.entity.Flight;
-import com.innovation.journeyplanning.entity.Hotel;
-import com.innovation.journeyplanning.entity.Result;
+import com.innovation.journeyplanning.entity.*;
 import com.innovation.journeyplanning.util.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +18,7 @@ public class Count {
     private ArrayList<Hotel>hotels[][];
     @Autowired
     private Search search;
-    public Result CountCost(String start_date, String end_date, ArrayList<String>city, ArrayList<Integer>time){
+    public Result CountCost(String start_date, String end_date, ArrayList<String>city, ArrayList<Integer>time, FlightOption flightOption, HotelOption hotelOption){
         try {
             int day = CountDay(start_date, end_date)+1;
             flights=new ArrayList[day][city.size()][city.size()];
@@ -31,11 +29,8 @@ public class Count {
                 String date=getDate(start_date,i);
                 for (int j=0;j<city.size();++j){
                     for (int k=j+1;k<city.size();++k){
-                        if(j==0&&k==4){
-                            int a=0;
-                        }
-                        flights[i][j][k]=search.SearchFlight(city.get(j),city.get(k),date,"");
-                        flights[i][k][j]=search.SearchFlight(city.get(k),city.get(j),date,"");
+                        flights[i][j][k]=search.SearchFlight(city.get(j),city.get(k),date,flightOption);
+                        flights[i][k][j]=search.SearchFlight(city.get(k),city.get(j),date,flightOption);
                     }
                 }
             }
@@ -45,7 +40,7 @@ public class Count {
                 String date=getDate(start_date,i);
                 for (int j=0;j<city.size();++j) {
 //                    hotels[i][j]=new ArrayList<>();
-                    hotels[i][j] = search.SearchHotel(city.get(j), date, "");
+                    hotels[i][j] = search.SearchHotel(city.get(j), date, hotelOption);
                 }
             }
 

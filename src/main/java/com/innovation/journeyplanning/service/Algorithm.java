@@ -1,8 +1,6 @@
 package com.innovation.journeyplanning.service;
 
-import com.innovation.journeyplanning.entity.Flight;
-import com.innovation.journeyplanning.entity.Hotel;
-import com.innovation.journeyplanning.entity.Result;
+import com.innovation.journeyplanning.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,22 +39,22 @@ public class Algorithm {
 				for (int j=0;j<hotels[m][(int)a.get(i-1)].size();++j){
 					Hotel h=hotels[m][(int)a.get(i-1)].get(j);
 					if (time_list.get((int)a.get(i-1))!=0)
-					System.out.println(h.getHotel_city()+" "+h.getHotel_name()+" "+h.getCome_date()+" "+h.getHotel_price());
+						System.out.println(h.getHotel_city()+" "+h.getHotel_name()+" "+h.getCome_date()+" "+h.getHotel_price());
 				}
 				m=m+time[(int) a.get(i-1)];
 			}
 			return;
 		}
 		for (int i=0;i<last[dd][status].size();++i) {
-		    a.add(last[dd][status].get(i));
-		    m=dd;
-		    int mm=dd;
-		    dd=dd-time[last[dd][status].get(i)];
-		    //status=status^(1<<last[m][status].get(i));
-		    print(dd,status^(1<<last[m][status].get(i)),city_list,time_list);
-		    //status=status^(1<<last[mm][status].get(i));
-		    dd=dd+time[last[mm][status].get(i)];
-		    a.remove(a.size()-1);
+			a.add(last[dd][status].get(i));
+			m=dd;
+			int mm=dd;
+			dd=dd-time[last[dd][status].get(i)];
+			//status=status^(1<<last[m][status].get(i));
+			print(dd,status^(1<<last[m][status].get(i)),city_list,time_list);
+			//status=status^(1<<last[mm][status].get(i));
+			dd=dd+time[last[mm][status].get(i)];
+			a.remove(a.size()-1);
 		}
 	}
 	
@@ -132,7 +130,7 @@ public class Algorithm {
 		else return b;
 	}
 
-	public void main(String start_date, String end_date, ArrayList<String>city_list,ArrayList<Integer>time_list) throws ParseException
+	public void main(String start_date, String end_date, ArrayList<String>city_list, ArrayList<Integer>time_list, FlightOption flightOption, HotelOption hotelOption) throws ParseException
 
 	{
 		int city=city_list.size();
@@ -151,7 +149,7 @@ public class Algorithm {
 			for (int j=0;j<city;++j)
 				if ((i&(1<<j))!=0)
 					time[i]=time[i]+time[j];
-		count_result=count.CountCost(start_date,end_date,city_list,time_list);
+		count_result=count.CountCost(start_date,end_date,city_list,time_list,flightOption,hotelOption);
 		cost=count_result.cost;
 		flights=count_result.flights;
 		hotels=count_result.hotels;

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 public class Flight {
     private String flight_id;
-//    private String flight_number;
+    //    private String flight_number;
     private String airline;
     private String model;
     private String dept_date;
@@ -22,7 +22,7 @@ public class Flight {
     private String arv_airport;
     private String arv_city;
     private float ontime_rate;
-//     private String seat_type;
+    //     private String seat_type;
     private float price;
     private int flight_day;
 

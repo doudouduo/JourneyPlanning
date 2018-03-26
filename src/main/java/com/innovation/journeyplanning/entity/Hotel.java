@@ -9,6 +9,7 @@ public class Hotel {
     private String hotel_comment;
     private float hotel_score;
     private float user_recommend;
+    private int user_number;
     private float hotel_price;
 
     public String getHotel_city() {
@@ -73,6 +74,14 @@ public class Hotel {
 
     public void setUser_recommend(float user_recommend) {
         this.user_recommend = user_recommend;
+    }
+
+    public int getUser_number() {
+        return user_number;
+    }
+
+    public void setUser_number(int user_number) {
+        this.user_number = user_number;
     }
 
     public float getHotel_price() {

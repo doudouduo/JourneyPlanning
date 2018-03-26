@@ -1,27 +1,34 @@
 package com.innovation.journeyplanning.util;
 
 import com.innovation.journeyplanning.entity.Flight;
+import com.innovation.journeyplanning.entity.FlightOption;
 import com.innovation.journeyplanning.entity.Hotel;
+import com.innovation.journeyplanning.entity.HotelOption;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Component
 public class Search {
     //驱动程序名
     private String driver = "com.mysql.jdbc.Driver";
     //URL指向要访问的数据库名mydata
-    private String url = "jdbc:mysql://localhost:3306/JourneyPlanning?characterEncoding=utf8&useSSL=true";
+    private String flight_url = "jdbc:mysql://111.231.132.139:3306/Flight?characterEncoding=utf8&useSSL=true";
+    private String hotel_url="jdbc:mysql://119.23.41.32:3306/Hotel?characterEncoding=utf8&useSSL=true";
     //MySQL配置时的用户名
     private String user = "root";
     //MySQL配置时的密码
-    private String password = "123456";
+    private String password = "woshinibaba";
 
-    private ArrayList<Flight>flights;
+    private ArrayList<Flight> flights;
     private ArrayList<Hotel>hotels;
-    public ArrayList<Flight> SearchFlight(String dept_city,String arv_city,String dept_date,String seat_price) {
-        ArrayList<Flight>flights=new ArrayList<Flight>();
+    public ArrayList<Flight> SearchFlight(String dept_city,
+                                          String arv_city,
+                                          String dept_date,
+                                          FlightOption flightOption) {
+        flights=new ArrayList<Flight>();
         //声明Connection对象
         Connection con;
         //遍历查询结果集
@@ -29,28 +36,91 @@ public class Search {
             //加载驱动程序
             Class.forName(driver);
             //1.getConnection()方法，连接MySQL数据库！！
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection(flight_url, user, password);
             if (!con.isClosed())
                 System.out.println("Succeeded connecting to the Database!");
             //2.创建statement类对象，用来执行SQL语句！！
             //要执行的SQL语句
             int num=3;
-            String sql = "select * from FlightInfo where dept_city=? and arv_city=? and dept_date=?";
-//            if (!seat_type.equals(""))sql=sql+" and seat_type=?";
-            if (!seat_price.equals(""))sql=sql+" and price<=?";
-            sql=sql+" order by price asc";
+            String select = "*";
+            String where="dept_city=? and arv_city=? and dept_date=?";
+            if (!flightOption.isstop.equals(""))where=where+" and isstop<=?";
+            if (!flightOption.flight_day.equals("0"))where=where+" and flight_day=?";
+            if (!flightOption.ontime_rate.equals(""))where=where+" and ontime_rate>=?";
+            if (!flightOption.earliest_dept_time.equals(""))where=where+" and dept_time>=?";
+            if (!flightOption.latest_arv_time.equals(""))where=where+" and arv_time<=?";
+            //机场限制
+            if (flightOption.dept_airport.size()!=0) {
+                where = where + " and(dept_airport=?";
+                for (int i = 1; i < flightOption.dept_airport.size(); ++i) where = where + " or dept_airport=?";
+                where = where + ")";
+            }
+            if (flightOption.arv_airport.size()!=0){
+                where = where + " and(arv_airport=?";
+                for (int i = 1; i < flightOption.arv_airport.size(); ++i) where = where + " or arv_airport=?";
+                where = where + ")";
+            }
+
+            //航空公司限制
+            if (flightOption.airline.size()!=0) {
+                where = where + " and(airline like ?";
+                for (int i = 1; i < flightOption.airline.size(); ++i) where = where + " or airline=?";
+                where = where + ")";
+            }
+
+            String sql="select ";
+            sql=sql+select+" from FlightInfo where "+where;
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1,dept_city);
             stmt.setString(2,arv_city);
             stmt.setString(3,dept_date);
-//            if (!seat_type.equals("")){
-//                ++num;
-//                stmt.setString(num,seat_type);
-//            }
-            if (!seat_price.equals("")){
+            if (!flightOption.airline.equals("")){
                 ++num;
-                stmt.setFloat(num,Float.parseFloat(seat_price));
+                stmt.setString(num,"%"+flightOption.airline+"%");
             }
+            if (!flightOption.isstop.equals("")){
+                ++num;
+                stmt.setString(num,flightOption.isstop);
+            }
+            if (!flightOption.flight_day.equals("")){
+                ++num;
+                stmt.setString(num,flightOption.flight_day);
+            };
+            if (!flightOption.ontime_rate.equals("")){
+                ++num;
+                stmt.setString(num,flightOption.ontime_rate);
+            }
+            if (!flightOption.earliest_dept_time.equals("")){
+                ++num;
+                stmt.setString(num,flightOption.earliest_dept_time);
+            }
+            if (!flightOption.latest_arv_time.equals("")){
+                ++num;
+                stmt.setString(num,flightOption.latest_arv_time);
+            }
+
+            //机场限制
+            if (flightOption.dept_airport.size()!=0){
+                for (int i=0;i<flightOption.dept_airport.size();++i) {
+                    ++num;
+                    stmt.setString(num, flightOption.dept_airport.get(i));
+                }
+            };
+            if (!flightOption.arv_airport.equals("")) {
+                for (int i = 0; i < flightOption.arv_airport.size(); ++i) {
+                    ++num;
+                    stmt.setString(num, flightOption.arv_airport.get(i));
+                }
+            }
+
+            //航空公司限制
+            if (flightOption.airline.size()!=0) {
+                for (int i = 0; i < flightOption.airline.size(); ++i) {
+                    ++num;
+                    stmt.setString(num, flightOption.airline.get(i));
+                }
+            }
+
             //3.ResultSet类，用来存放获取的结果集！！
             ResultSet rs = stmt.executeQuery();
             if (rs.next()){
@@ -58,7 +128,7 @@ public class Search {
                 f.setFlight_id(rs.getString("flight_id"));
 //                f.setFlight_number(rs.getString("flight_number"));
                 f.setAirline(rs.getString("airline"));
-                f.setModel(rs.getString("model"));
+//                f.setModel(rs.getString("model"));
                 f.setDept_date(rs.getString("dept_date"));
                 f.setDept_time(rs.getString("dept_time"));
                 f.setDept_airport(rs.getString("dept_airport"));
@@ -80,7 +150,7 @@ public class Search {
                     f.setFlight_id(rs.getString("flight_id"));
 //                    f.setFlight_number(rs.getString("flight_number"));
                     f.setAirline(rs.getString("airline"));
-                    f.setModel(rs.getString("model"));
+//                    f.setModel(rs.getString("model"));
                     f.setDept_date(rs.getString("dept_date"));
                     f.setDept_time(rs.getString("dept_time"));
                     f.setDept_airport(rs.getString("dept_airport"));
@@ -120,8 +190,11 @@ public class Search {
             return flights;
         }
     }
-    public ArrayList<Hotel>SearchHotel(String hotel_city,String come_date,String hotel_price){
-        ArrayList<Hotel>hotels=new ArrayList<Hotel>();
+
+    public ArrayList<Hotel>SearchHotel(String hotel_city,
+                                       String come_date,
+                                       HotelOption hotelOption){
+        hotels=new ArrayList<Hotel>();
         //声明Connection对象
         Connection con;
         //遍历查询结果集
@@ -129,19 +202,78 @@ public class Search {
             //加载驱动程序
             Class.forName(driver);
             //1.getConnection()方法，连接MySQL数据库！！
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection(hotel_url, user, password);
             if (!con.isClosed())
                 System.out.println("Succeeded connecting to the Database!");
             //2.创建statement类对象，用来执行SQL语句！！
             //要执行的SQL语句
             int num=2;
-            String sql = "select * from HotelInfo where hotel_city=? and come_date=?";
-            if (!hotel_price.equals(""))sql=sql+" and hotel_price<=?";
-            sql=sql+" order by hotel_price asc";
+            String select = "*";
+            String where="hotel_city=? and come_date=?";
+            if (!hotelOption.lowest_price.equals(""))where=where+" and hotel_price>=?";
+            if (!hotelOption.highest_price.equals(""))where=where+" and hotel_price<=?";
+            if (!hotelOption.hotel_score.equals(""))where=where+" and hotel_score>=?";
+            if (!hotelOption.user_number.equals(""))where=where+" and user_number>=?";
+            if (!hotelOption.user_recommend.equals(""))where=where+" and user_recommend>=?";
+
+            //酒店类型限制
+            if (hotelOption.hotel_type.size()!=0){
+                where = where + " and((user_star like ?";
+                for (int i = 1; i < hotelOption.hotel_type.size(); ++i) where = where + " or user_star like ?";
+                where = where + ")";
+            }
+
+            //酒店星级限制
+            if (hotelOption.hotel_star.size()!=0){
+                if (hotelOption.hotel_type.size()!=0)where=where+" or (user_star like ?";
+                else where = where + " and(user_star like ?";
+                for (int i = 1; i < hotelOption.hotel_type.size(); ++i) where = where + " or user_star like ?";
+                where = where + ")";
+            }
+
+            if (hotelOption.hotel_type.size()!=0)where=where+")";
+
+            String sql="select "+select+" from HotelInfo where "+where+" order by hotel_price asc";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1,hotel_city);
             stmt.setString(2,come_date);
-            if (!hotel_price.equals(""))stmt.setFloat(3, Float.parseFloat(hotel_price));
+            if (!hotelOption.lowest_price.equals("")){
+                ++num;
+                stmt.setString(num,hotelOption.lowest_price);
+            }
+            if (!hotelOption.highest_price.equals("")){
+                ++num;
+                stmt.setString(num,hotelOption.highest_price);
+            }
+            if (!hotelOption.hotel_score.equals("")){
+                ++num;
+                stmt.setString(num,hotelOption.hotel_score);
+            }
+            if (!hotelOption.user_number.equals("")){
+                ++num;
+                stmt.setString(num,hotelOption.user_number);
+            }
+            if (!hotelOption.user_recommend.equals("")){
+                ++num;
+                stmt.setString(num,hotelOption.user_recommend);
+            }
+
+            //酒店类型限制
+            if (hotelOption.hotel_type.size()!=0){
+                for (int i = 0; i < hotelOption.hotel_type.size(); ++i) {
+                    ++num;
+                    stmt.setString(num, "%"+hotelOption.hotel_type.get(i)+"%");
+                }
+            }
+
+            //酒店星级限制
+            if (hotelOption.hotel_star.size()!=0){
+                for (int i = 0; i < hotelOption.hotel_star.size(); ++i) {
+                    ++num;
+                    stmt.setString(num, "%"+hotelOption.hotel_star.get(i)+"%");
+                }
+            }
+
             //3.ResultSet类，用来存放获取的结果集！！
             ResultSet rs = stmt.executeQuery();
             if (rs.next()){
@@ -154,6 +286,7 @@ public class Search {
                 h.setHotel_price(rs.getFloat("hotel_price"));
                 h.setHotel_score(rs.getFloat("hotel_score"));
                 h.setUser_recommend(rs.getFloat("user_recommend"));
+                h.setUser_number(rs.getInt("user_number"));
                 h.setUser_star(rs.getString("user_star"));
                 hotels.add(h);
             }
@@ -168,6 +301,7 @@ public class Search {
                     h.setHotel_name(rs.getString("hotel_name"));
                     h.setHotel_score(rs.getFloat("hotel_score"));
                     h.setUser_recommend(rs.getFloat("user_recommend"));
+                    h.setUser_number(rs.getInt("user_number"));
                     h.setUser_star(rs.getString("user_star"));
                     hotels.add(h);
                 }
@@ -189,6 +323,21 @@ public class Search {
             System.out.println("数据库数据成功获取！！");
         }
 
-        return hotels;
+        if (hotels.size()!=0)return hotels;
+        else {
+            Hotel h=new Hotel();
+            h.setHotel_price((float)(1<<30));
+            hotels.add(h);
+            return hotels;
+        }
+    }
+    public float min(float economy_price,float first_price,float business_price){
+        if (economy_price<first_price&&economy_price<business_price)return economy_price;
+        else if (first_price<economy_price&&first_price<business_price)return first_price;
+        else return business_price;
+    }
+    public float min(float price1,float price2){
+        if (price1<price2)return price1;
+        else return  price2;
     }
 }
