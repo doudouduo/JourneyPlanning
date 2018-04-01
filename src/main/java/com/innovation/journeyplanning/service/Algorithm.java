@@ -1,6 +1,8 @@
 package com.innovation.journeyplanning.service;
 
 import com.innovation.journeyplanning.entity.*;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,32 +19,52 @@ public class Algorithm {
 	private ArrayList<Integer> last[][];
 	private ArrayList<Integer> first[][];
 	private ArrayList a;
+	private ArrayList<Integer>end_day=new ArrayList<>();
 	private int dd=0;
 	private int m=0;
+	private int result_num=0;
 	private Result count_result;
 	private ArrayList<Flight>flights[][][];
 	private ArrayList<Hotel>hotels[][];
 	@Autowired
 	private Count count;
+	private JSONObject result;
+	private JSONArray jsonObject_result;
 
 	public void print(int d,int status,ArrayList<String>city_list,ArrayList<Integer>time_list)
 	{
+
 		if (status==0) {
+			jsonObject_result=new JSONArray();
 			for (int i=a.size()-1;i>0;--i)System.out.print(city_list.get((int)a.get(i))+"->");
 			System.out.println(city_list.get((int)a.get(0)));
 			for (int i=a.size()-1;i>0;--i) {
+				JSONObject jsonObject_plan=new JSONObject();
+				JSONArray jsonArray_f=new JSONArray();
+				JSONArray jsonArray_h=new JSONArray();
 				System.out.println(cost[m][(int) a.get(i)][(int) a.get(i-1)]);
 				for (int j=0;j<flights[m][(int)a.get(i)][(int)a.get(i-1)].size();++j){
 					Flight f=flights[m][(int)a.get(i)][(int)a.get(i-1)].get(j);
+					JSONObject jsonObject_f=JSONObject.fromObject(f);
+					jsonArray_f.add(j,jsonObject_f);
 					System.out.println(f.getFlight_id()+" "+f.getDept_date()+" "+f.getDept_city()+" "+f.getArv_city()+" "+f.getPrice());
 				}
 				for (int j=0;j<hotels[m][(int)a.get(i-1)].size();++j){
 					Hotel h=hotels[m][(int)a.get(i-1)].get(j);
-					if (time_list.get((int)a.get(i-1))!=0)
-						System.out.println(h.getHotel_city()+" "+h.getHotel_name()+" "+h.getCome_date()+" "+h.getHotel_price());
+					if (time_list.get((int)a.get(i-1))!=0) {
+						JSONObject jsonObject_h=JSONObject.fromObject(h);
+						jsonArray_h.add(j,jsonObject_h);
+						System.out.println(h.getHotel_city() + " " + h.getHotel_name() + " " + h.getCome_date() + " " + h.getHotel_price());
+					}
 				}
+				jsonObject_plan.put("cost",new Float(cost[m][(int) a.get(i)][(int) a.get(i-1)]));
+				jsonObject_plan.put("flight",jsonArray_f);
+				jsonObject_plan.put("hotel",jsonArray_h);
+				jsonObject_result.add(jsonObject_plan);
 				m=m+time[(int) a.get(i-1)];
 			}
+			++result_num;
+			result.put("plan"+Integer.toString(result_num),jsonObject_result);
 			return;
 		}
 		for (int i=0;i<last[dd][status].size();++i) {
@@ -130,7 +152,7 @@ public class Algorithm {
 		else return b;
 	}
 
-	public void main(String start_date, String end_date, ArrayList<String>city_list, ArrayList<Integer>time_list, FlightOption flightOption, HotelOption hotelOption) throws ParseException
+	public JSONObject main(String start_date, String end_date, ArrayList<String>city_list, ArrayList<Integer>time_list, FlightOption flightOption, HotelOption hotelOption,int user_id,int schedule_id) throws ParseException
 
 	{
 		int city=city_list.size();
@@ -149,7 +171,9 @@ public class Algorithm {
 			for (int j=0;j<city;++j)
 				if ((i&(1<<j))!=0)
 					time[i]=time[i]+time[j];
+		long data_start_time=System.nanoTime();
 		count_result=count.CountCost(start_date,end_date,city_list,time_list,flightOption,hotelOption);
+		long data_end_time=System.nanoTime();
 		cost=count_result.cost;
 		flights=count_result.flights;
 		hotels=count_result.hotels;
@@ -158,21 +182,39 @@ public class Algorithm {
 				last[i][j]=new ArrayList<Integer>();
 				first[i][j]=new ArrayList<Integer>();
 			}
+		long solve_start_time=System.nanoTime();
 		solve(day,city);
+		long solve_end_time=System.nanoTime();
 		Float min=(float)(1<<30);
 		
 		for (int i=0;i<day;++i) {
 			if (min>f[i][(1<<city)-1]) {
 				min=f[i][(1<<city)-1];
-				dd=i;
+				end_day.clear();
+				end_day.add(i);
 			}
+			else if (min==f[i][(1<<city)-1]&&min!=(float)(1<<30))end_day.add(i);
 		}
-		System.out.println("建议第"+dd+"天结束旅行");
-		int status=(1<<(city-1))-1;
-		System.out.println("最少费用为："+min);
-		System.out.print("最廉价旅游方案为：");
-		
-		print(dd,status,city_list,time_list);
-		System.out.println();
+
+		result=new JSONObject();
+		result.put("user_id", new Integer(user_id));
+		result.put("schedule_id", new Integer(schedule_id));
+		result.put("min_cost",min);
+		System.out.println("最少费用为：" + min);
+		for (int i=0;i<end_day.size();++i) {
+			dd=end_day.get(i);
+			System.out.println("建议第" + dd + "天结束旅行");
+			int status = (1 << (city - 1)) - 1;
+			System.out.print("最廉价旅游方案为：");
+
+			print(dd, status, city_list, time_list);
+//			result.put("result"+Integer.toString(i+1), jsonObject_result);
+//			System.out.println();
+		}
+		result.put("result_num",result_num);
+		System.out.println(result.toString());
+		System.out.println("数据库访问时间:"+Long.toString(data_end_time-data_start_time));
+		System.out.println("计算solution时间:"+Long.toString(solve_end_time-solve_start_time));
+		return result;
 	}
 }

@@ -44,8 +44,8 @@ public class Search {
             int num=3;
             String select = "*";
             String where="dept_city=? and arv_city=? and dept_date=?";
-            if (!flightOption.isstop.equals(""))where=where+" and isstop<=?";
-            if (!flightOption.flight_day.equals("0"))where=where+" and flight_day=?";
+//            if (!flightOption.isstop.equals(""))where=where+" and isstop<=?";
+            if (!flightOption.flight_day.equals("1"))where=where+" and flight_day=?";
             if (!flightOption.ontime_rate.equals(""))where=where+" and ontime_rate>=?";
             if (!flightOption.earliest_dept_time.equals(""))where=where+" and dept_time>=?";
             if (!flightOption.latest_arv_time.equals(""))where=where+" and arv_time<=?";
@@ -74,15 +74,11 @@ public class Search {
             stmt.setString(1,dept_city);
             stmt.setString(2,arv_city);
             stmt.setString(3,dept_date);
-            if (!flightOption.airline.equals("")){
-                ++num;
-                stmt.setString(num,"%"+flightOption.airline+"%");
-            }
-            if (!flightOption.isstop.equals("")){
-                ++num;
-                stmt.setString(num,flightOption.isstop);
-            }
-            if (!flightOption.flight_day.equals("")){
+//            if (!flightOption.isstop.equals("")){
+//                ++num;
+//                stmt.setString(num,flightOption.isstop);
+//            }
+            if (!flightOption.flight_day.equals("1")){
                 ++num;
                 stmt.setString(num,flightOption.flight_day);
             };
@@ -145,6 +141,9 @@ public class Search {
             }
             while (rs.next()) {
                 Flight f=new Flight();
+                if(flights.size()==0){
+                    int a=0;
+                }
                 f.setPrice(rs.getFloat("price"));
                 if (f.getPrice()==flights.get(0).getPrice()){
                     f.setFlight_id(rs.getString("flight_id"));
@@ -227,7 +226,7 @@ public class Search {
             if (hotelOption.hotel_star.size()!=0){
                 if (hotelOption.hotel_type.size()!=0)where=where+" or (user_star like ?";
                 else where = where + " and(user_star like ?";
-                for (int i = 1; i < hotelOption.hotel_type.size(); ++i) where = where + " or user_star like ?";
+                for (int i = 1; i < hotelOption.hotel_star.size(); ++i) where = where + " or user_star like ?";
                 where = where + ")";
             }
 

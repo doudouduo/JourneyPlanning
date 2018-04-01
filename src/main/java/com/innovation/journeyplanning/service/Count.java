@@ -64,6 +64,17 @@ public class Count {
                 }
             }
 
+            //输出cost数组
+            for (int i=0;i<day;++i) {
+                for (int j = 0; j < city.size(); ++j) {
+                    for (int k = 0; k < city.size(); ++k) {
+                        System.out.print(cost[i][j][k] + " ");
+                    }
+                    System.out.println();
+                }
+                System.out.println();
+            }
+
             return new Result(flights,hotels,cost);
         }catch (ParseException e){}
         return null;

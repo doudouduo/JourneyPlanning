@@ -1,10 +1,5 @@
-spring:
-    jpa:
-        hibernate:
-            ddl-auto: create
-        show-sql: true
-    datasource:
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/JourneyPlanning
-        username: root
-        password: 123456
+rabbitmq:
+    host: 182.254.138.108
+    port: 15672
+    username: woshinibaba
+    password: nishiwoerzi
