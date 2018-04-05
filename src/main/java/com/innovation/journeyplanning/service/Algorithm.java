@@ -19,10 +19,10 @@ public class Algorithm {
 	private ArrayList<Integer> last[][];
 	private ArrayList<Integer> first[][];
 	private ArrayList a;
-	private ArrayList<Integer>end_day=new ArrayList<>();
+	private ArrayList<Integer>end_day;
 	private int dd=0;
 	private int m=0;
-	private int result_num=0;
+	private int result_num;
 	private Result count_result;
 	private ArrayList<Flight>flights[][][];
 	private ArrayList<Hotel>hotels[][];
@@ -42,11 +42,13 @@ public class Algorithm {
 				JSONObject jsonObject_plan=new JSONObject();
 				JSONArray jsonArray_f=new JSONArray();
 				JSONArray jsonArray_h=new JSONArray();
+				String date="";
 				System.out.println(cost[m][(int) a.get(i)][(int) a.get(i-1)]);
 				for (int j=0;j<flights[m][(int)a.get(i)][(int)a.get(i-1)].size();++j){
 					Flight f=flights[m][(int)a.get(i)][(int)a.get(i-1)].get(j);
 					JSONObject jsonObject_f=JSONObject.fromObject(f);
 					jsonArray_f.add(j,jsonObject_f);
+					date=f.getDept_date();
 					System.out.println(f.getFlight_id()+" "+f.getDept_date()+" "+f.getDept_city()+" "+f.getArv_city()+" "+f.getPrice());
 				}
 				for (int j=0;j<hotels[m][(int)a.get(i-1)].size();++j){
@@ -54,12 +56,14 @@ public class Algorithm {
 					if (time_list.get((int)a.get(i-1))!=0) {
 						JSONObject jsonObject_h=JSONObject.fromObject(h);
 						jsonArray_h.add(j,jsonObject_h);
+						date=h.getCome_date();
 						System.out.println(h.getHotel_city() + " " + h.getHotel_name() + " " + h.getCome_date() + " " + h.getHotel_price());
 					}
 				}
 				jsonObject_plan.put("cost",new Float(cost[m][(int) a.get(i)][(int) a.get(i-1)]));
 				jsonObject_plan.put("flight",jsonArray_f);
 				jsonObject_plan.put("hotel",jsonArray_h);
+				jsonObject_plan.put("date",date);
 				jsonObject_result.add(jsonObject_plan);
 				m=m+time[(int) a.get(i-1)];
 			}
@@ -163,6 +167,8 @@ public class Algorithm {
 		hotels=new ArrayList[day][city];
 		last=new ArrayList[day][1<<city];
 		first=new ArrayList[day][1<<city];
+		result_num=0;
+		end_day=new ArrayList<>();
 		a=new ArrayList();
 		a.add(city-1);
 		for (int i=0;i<city;++i)time[i]=time_list.get(i);
@@ -212,9 +218,10 @@ public class Algorithm {
 //			System.out.println();
 		}
 		result.put("result_num",result_num);
+		if (result_num==0)result.put("error","找不到合适的出行方案！");
 		System.out.println(result.toString());
-		System.out.println("数据库访问时间:"+Long.toString(data_end_time-data_start_time));
-		System.out.println("计算solution时间:"+Long.toString(solve_end_time-solve_start_time));
+		System.out.println("数据库访问时间:"+Double.toString((float)(data_end_time-data_start_time)/1e9/60)+"分钟");
+		System.out.println("计算solution时间:"+Double.toString((float)(solve_end_time-solve_start_time)/1e6)+"毫秒");
 		return result;
 	}
 }

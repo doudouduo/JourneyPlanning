@@ -5,7 +5,8 @@ public class Hotel {
     private String come_date;
     private String hotel_name;
     private String hotel_address;
-    private String user_star;
+    private String hotel_type;
+    private String hotel_star;
     private String hotel_comment;
     private float hotel_score;
     private float user_recommend;
@@ -44,12 +45,20 @@ public class Hotel {
         this.hotel_address = hotel_address;
     }
 
-    public String getUser_star() {
-        return user_star;
+    public String getHotel_type() {
+        return hotel_type;
     }
 
-    public void setUser_star(String user_star) {
-        this.user_star = user_star;
+    public void setHotel_type(String hotel_type) {
+        this.hotel_type = hotel_type;
+    }
+
+    public String getHotel_star() {
+        return hotel_star;
+    }
+
+    public void setHotel_star(String hotel_star) {
+        this.hotel_star = hotel_star;
     }
 
     public String getHotel_comment() {

@@ -138,29 +138,55 @@ public class AlgorithmController {
         jsonArray=request.getJSONArray("cities");
         city.add(dept_city);
         time.add(0);
+        String flag="";
+        int total_time=0;
         for (int i=0;i<jsonArray.size();++i){
             JSONObject jsonObject=jsonArray.getJSONObject(i);
-            city.add(jsonObject.getString("city_name"));
-            time.add(jsonObject.getInt("stay_days"));
+            String city_name=jsonObject.getString("city_name");
+            int stay_days=jsonObject.getInt("stay_days");
+            for (int j=0;j<city.size();++j){
+                if (city.get(j).equals(city_name)) {
+                    if (time.get(j)!=stay_days){
+                        flag="输入途经城市信息有误！";
+                        break;
+                    }
+                    else {
+                        flag="输入途经城市信息有重复！";
+                        continue;
+                    }
+                }
+            }
+            if(flag.equals("")){
+                city.add(city_name);
+                time.add(stay_days);
+                total_time=total_time+stay_days;
+            }
         }
-        city.add(arv_city);
+
+        for (int i=1;i<city.size();++i){
+            if (arv_city.equals(city.get(i))){
+                flag="输入途经城市信息有误！";
+                break;
+            }
+        }
+        if (flag.equals(""))city.add(arv_city);
         time.add(0);
+        int day = count.CountDay(start_date, end_date) + 1;
+        if (total_time>day)flag="输入出行时间有误！";
 
-        int day=count.CountDay(start_date,end_date)+1;
-//        Float[][][]cost=new Float[count.CountDay(start_date,end_date)][city.size()][city.size()];
-//        cost=count.CountCost(start_date,end_date,city,time,flightOption,hotelOption).cost;
-        JSONObject result=algorithm.main(start_date,end_date,city,time,flightOption,hotelOption,user_id,schedule_id);
-//        for (int i=0;i<day;++i) {
-//            for (int j = 0; j < city.size(); ++j) {
-//                for (int k = 0; k < city.size(); ++k) {
-//                    System.out.print(cost[i][j][k] + " ");
-//                }
-//                System.out.println();
-//            }
-//            System.out.println();
-//        }
-        producer.main(result.toString());
-
+        if (flag.equals("")) {
+            JSONObject result = algorithm.main(start_date, end_date, city, time, flightOption, hotelOption, user_id, schedule_id);
+            producer.main(result.toString());
+        }
+        else {
+            JSONObject result=new JSONObject();
+            result.put("user_id",new Integer(user_id));
+            result.put("schedule_id",new Integer(schedule_id));
+            result.put("error",flag);
+            result.put("min_cost",new Integer(0));
+            result.put("result_num",new Integer(0));
+            producer.main(result.toString());
+        }
     }
 
     public String formatdate(String date) throws ParseException{

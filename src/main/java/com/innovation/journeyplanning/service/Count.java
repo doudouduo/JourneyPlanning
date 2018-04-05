@@ -53,11 +53,11 @@ public class Count {
             for (int i=0;i<day;++i){
                 for (int j=0;j<city.size();++j){
                     for (int k=j+1;k<city.size();++k){
-                        if(i+time.get(k)<day) {
+                        if(i+time.get(k)<day&&flights[i][j][k].get(0).getPrice()!=(float)(1<<30)&&hotels[i][k].get(0).getHotel_price()!=(float)(1<<30)) {
                             cost[i][j][k] = flights[i][j][k].get(0).getPrice() + hotels[i][k].get(0).getHotel_price() * time.get(k);
                         }
 
-                        if (i+time.get(j)<day) {
+                        if (i+time.get(j)<day&&flights[i][k][j].get(0).getPrice()!=(float)(1<<30)&&hotels[i][j].get(0).getHotel_price()!=(float)(1<<30)) {
                             cost[i][k][j] = flights[i][k][j].get(0).getPrice() + hotels[i][j].get(0).getHotel_price() * time.get(j);
                         }
                     }
