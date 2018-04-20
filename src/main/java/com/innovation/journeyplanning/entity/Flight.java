@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-public class Flight {
+public class Flight  implements Comparable{
     private String flight_id;
     //    private String flight_number;
     private String airline;
@@ -29,6 +29,24 @@ public class Flight {
     public Flight(){
 
     }
+
+    @Override
+    public int compareTo(Object o){
+        Flight f=(Flight)o;
+        if (this.getPrice()-f.getPrice()>0)return 1;
+        else if (this.getPrice()-f.getPrice()==0)return 0;
+        else return -1;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        boolean flag=false;
+        if (o instanceof Flight){
+            if (this.getPrice()==((Flight)o).getPrice())flag=true;
+        }
+        return flag;
+    }
+
 
     public String getFlight_id() {
         return flight_id;

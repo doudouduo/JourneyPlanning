@@ -1,6 +1,6 @@
 package com.innovation.journeyplanning.entity;
 
-public class Hotel {
+public class Hotel implements Comparable{
     private String hotel_city;
     private String come_date;
     private String hotel_name;
@@ -12,6 +12,24 @@ public class Hotel {
     private float user_recommend;
     private int user_number;
     private float hotel_price;
+
+
+    @Override
+    public int compareTo(Object o){
+        Hotel h=(Hotel)o;
+        if (this.getHotel_price()-h.getHotel_price()>0)return 1;
+        else if (this.getHotel_price()-h.getHotel_price()==0)return 0;
+        else return -1;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        boolean flag=false;
+        if (o instanceof Flight){
+            if (this.getHotel_price()==((Hotel)o).getHotel_price())flag=true;
+        }
+        return flag;
+    }
 
     public String getHotel_city() {
         return hotel_city;

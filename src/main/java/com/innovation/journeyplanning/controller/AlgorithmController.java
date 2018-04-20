@@ -120,14 +120,14 @@ public class AlgorithmController {
         hotelOption.highest_price=request.getString("highest_price");
         hotelOption.hotel_score=request.getString("hotel_score");
         hotelOption.user_recommend=request.getString("user_recommend");
-        hotelOption.user_number=request.getString("user_number");
+        hotelOption.user_number=Integer.toString((int)(request.getDouble("user_number")*100));
         if(!request.getString("hotel_type").equals("无要求"))hotelOption.hotel_type.add(request.getString("hotel_type"));
-        if(request.getInt("hotel_star")!=0){
+        if(request.getInt("hotel_star")>2){
             int hotel_star=request.getInt("hotel_star");
             for (int i=hotel_star;i<=5;++i){
                 switch (i){
-                    case 1:hotelOption.hotel_star.add("一星级");break;
-                    case 2:hotelOption.hotel_star.add("二星级");break;
+//                    case 1:hotelOption.hotel_star.add("一星级");break;
+//                    case 2:hotelOption.hotel_star.add("二星级");break;
                     case 3:hotelOption.hotel_star.add("三星级");break;
                     case 4:hotelOption.hotel_star.add("四星级");break;
                     case 5:hotelOption.hotel_star.add("五星级");break;
@@ -169,6 +169,7 @@ public class AlgorithmController {
                 break;
             }
         }
+        if (city.size()==1&&arv_city.equals(city.get(0)))flag="输入途经城市信息有误！";
         if (flag.equals(""))city.add(arv_city);
         time.add(0);
         int day = count.CountDay(start_date, end_date) + 1;
@@ -185,7 +186,6 @@ public class AlgorithmController {
             result.put("error",flag);
             result.put("min_cost",new Integer(0));
             result.put("result_num",new Integer(0));
-            producer.main(result.toString());
         }
     }
 

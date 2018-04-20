@@ -53,7 +53,7 @@ public class Algorithm {
 				}
 				for (int j=0;j<hotels[m][(int)a.get(i-1)].size();++j){
 					Hotel h=hotels[m][(int)a.get(i-1)].get(j);
-					if (time_list.get((int)a.get(i-1))!=0) {
+					if (time_list.get(((int)a.get(i-1)))!=0) {
 						JSONObject jsonObject_h=JSONObject.fromObject(h);
 						jsonArray_h.add(j,jsonObject_h);
 						date=h.getCome_date();
@@ -65,7 +65,7 @@ public class Algorithm {
 				jsonObject_plan.put("hotel",jsonArray_h);
 				jsonObject_plan.put("date",date);
 				jsonObject_result.add(jsonObject_plan);
-				m=m+time[(int) a.get(i-1)];
+				m=m+time[1<<(int) a.get(i-1)];
 			}
 			++result_num;
 			result.put("plan"+Integer.toString(result_num),jsonObject_result);
@@ -75,11 +75,11 @@ public class Algorithm {
 			a.add(last[dd][status].get(i));
 			m=dd;
 			int mm=dd;
-			dd=dd-time[last[dd][status].get(i)];
+			dd=dd-time[1<<last[dd][status].get(i)];
 			//status=status^(1<<last[m][status].get(i));
 			print(dd,status^(1<<last[m][status].get(i)),city_list,time_list);
 			//status=status^(1<<last[mm][status].get(i));
-			dd=dd+time[last[mm][status].get(i)];
+			dd=dd+time[1<<last[mm][status].get(i)];
 			a.remove(a.size()-1);
 		}
 	}
@@ -97,36 +97,36 @@ public class Algorithm {
 					last[i][j].set(0, 0);
 				}
 			}
-			/*for (int j=0;j<city;++j) {
-				f[i][1<<j]=0;
+			for (int j=0;j<city;++j) {
+				f[i][1<<j]=(float)0;
 				first[i][1<<j].set(0, j);
 				last[i][1<<j].set(0, j);
-			}*/
+			}
 		}
 		for (int i=1;i<1<<(city-1);++i) {
-			if ((i&1)==0)continue;
+//			if ((i&1)==0)continue;
 			for (int j=0;j<day-1;++j) {
-				for (int k=1;k<city;++k) {
-					int m=i^(1<<k);
-					if (k==city-1&&m!=(1<<city)-1)continue;
-					if (m>i&&last[j][i].get(0)!=-1&&j+time[k]<day) {
-						for (int l=0;l<last[j][i].size();++l) {
-							if (f[j+time[k]][m]>f[j][i]+cost[j][last[j][i].get(l)][k]) {
-								f[j+time[k]][m]=f[j][i]+cost[j][last[j][i].get(l)][k];
-							    first[j+time[k]][m].clear();
-							    first[j+time[k]][m].add(first[j][i].get(l));
-							    last[j+time[k]][m].clear();
-							    last[j+time[k]][m].add(k);
-						    }
-							else if (f[j+time[k]][m]==f[j][i]+cost[j][last[j][i].get(l)][k]) {
-								first[j+time[k]][m].add(first[j][i].get(l));
-								last[j+time[k]][m].add(k);
-							}
-						}
-					}
-				}
-				if((i&(1<<(city-1)))!=0)continue;
-				for (int k=1;k<1<<(city-1);++k) {
+//				for (int k=1;k<city;++k) {
+//					int m=i^(1<<k);
+//					if (k==city-1&&m!=(1<<city)-1)continue;
+//					if (m>i&&last[j][i].get(0)!=-1&&j+time[1<<k]<day) {
+//						for (int l=0;l<last[j][i].size();++l) {
+//							if (f[j+time[1<<k]][m]>f[j][i]+cost[j][last[j][i].get(l)][k]) {
+//								f[j+time[1<<k]][m]=f[j][i]+cost[j][last[j][i].get(l)][k];
+//							    first[j+time[1<<k]][m].clear();
+//							    first[j+time[1<<k]][m].add(first[j][i].get(l));
+//							    last[j+time[1<<k]][m].clear();
+//							    last[j+time[1<<k]][m].add(k);
+//						    }
+//							else if (f[j+time[1<<k]][m]==f[j][i]+cost[j][last[j][i].get(l)][k]) {
+//								first[j+time[1<<k]][m].add(first[j][i].get(l));
+//								last[j+time[1<<k]][m].add(k);
+//							}
+//						}
+//					}
+//				}
+//				if((i&(1<<(city-1)))!=0)continue;
+				for (int k=1;k<1<<city;++k) {
 					if ((i&k)!=0||(k&1)==1)continue;
 					int m=i^k;
 					if (last[j][i].get(0)!=-1&&j+time[k]<day) {
@@ -141,8 +141,17 @@ public class Algorithm {
 									last[j+time[k]][m].add(last[j+time[k]][k].get(l2));
 								}
 								else if (f[j+time[k]][m]==f[j][i]+f[j+time[k]][k]+cost[j][last[j][i].get(l1)][first[j+time[k]][k].get(l2)]) {
-									first[j+time[k]][m].add(first[j][i].get(l1));
-									last[j+time[k]][m].add(last[j+time[k]][k].get(l2));
+									boolean flag=true;
+									for (int l3=0;l3<first[j+time[k]][m].size();++l3){
+										if (first[j+time[k]][m].get(l3)==first[j][i].get(l1)&&last[j + time[k]][m].get(l3)==last[j + time[k]][k].get(l2)){
+											flag=false;
+											break;
+										}
+									}
+									if (flag) {
+										first[j + time[k]][m].add(first[j][i].get(l1));
+										last[j + time[k]][m].add(last[j + time[k]][k].get(l2));
+									}
 								}
 							}
 						}
@@ -172,11 +181,6 @@ public class Algorithm {
 		a=new ArrayList();
 		a.add(city-1);
 		for (int i=0;i<city;++i)time[i]=time_list.get(i);
-		for (int i=city;i<1<<city;++i)time[i]=0;
-		for (int i=city;i<1<<city;++i)
-			for (int j=0;j<city;++j)
-				if ((i&(1<<j))!=0)
-					time[i]=time[i]+time[j];
 		long data_start_time=System.nanoTime();
 		count_result=count.CountCost(start_date,end_date,city_list,time_list,flightOption,hotelOption);
 		long data_end_time=System.nanoTime();
@@ -188,6 +192,26 @@ public class Algorithm {
 				last[i][j]=new ArrayList<Integer>();
 				first[i][j]=new ArrayList<Integer>();
 			}
+
+		for (int i=city;i<1<<city;++i)time[i]=0;
+		for (int i=city;i<1<<city;++i)
+			for (int j=0;j<city;++j)
+				if ((i&(1<<j))!=0)
+					time[i]=time[i]+time[j];
+		for (int i=city-1;i>0;--i) {
+			boolean flag = false;
+			for (int j = 0; j < city; ++j)
+				if (i == (1 << j)){
+					time[i]=time[j];
+					flag=true;
+				}
+			if (!flag)time[i]=0;
+		}
+		for (int i=0;i<city;++i)
+			for (int j=0;j<city;++j)
+				if ((i&(1<<j))!=0&&i!=(1<<j))
+					time[i]=time[i]+time[1<<j];
+
 		long solve_start_time=System.nanoTime();
 		solve(day,city);
 		long solve_end_time=System.nanoTime();

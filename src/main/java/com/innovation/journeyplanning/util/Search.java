@@ -19,16 +19,25 @@ public class Search {
     //驱动程序名
     private String driver = "com.mysql.jdbc.Driver";
     //URL指向要访问的数据库名mydata
-    private String flight_url = "jdbc:mysql://111.231.132.139:3306/Flight?characterEncoding=utf8&useSSL=true";
-    private String hotel_url="jdbc:mysql://119.23.41.32:3306/Hotel?characterEncoding=utf8&useSSL=true";
+    //远程数据库
+//    private String flight_url = "jdbc:mysql://111.231.132.139:3306/Flight?characterEncoding=utf8&useSSL=true";
+//    private String hotel_url="jdbc:mysql://119.23.41.32:3306/Hotel?characterEncoding=utf8&useSSL=true";
+    //本地数据库
+    private String flight_url = "jdbc:mysql://localhost:3306/JourneyPlanningMixed?characterEncoding=utf8&useSSL=true";
+    private String hotel_url="jdbc:mysql://localhost:3306/JourneyPlanningMixed?characterEncoding=utf8&useSSL=true";
+    //本地hive数据库
+//    private String driver = "com.cloudera.hive.jdbc41.HS1Driver";
+//    private String flight_url = "jdbc:hive2://192.168.56.101:10000/default";
+//    private String hotel_url = "jdbc:hive2://192.168.56.101:10000/default";
+    //远程memory数据库
+//    private String flight_url = "jdbc:mysql://111.231.107.142:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
+//    private String hotel_url="jdbc:mysql://111.231.107.142:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
 
-//    private String flight_url = "jdbc:mysql://localhost:3306/JourneyPlanning?characterEncoding=utf8&useSSL=true";
-//    private String hotel_url="jdbc:mysql://localhost:3306/JourneyPlanning?characterEncoding=utf8&useSSL=true";
 
     //MySQL配置时的用户名
     private String user = "root";
     //MySQL配置时的密码
-    private String password = "woshinibaba";
+    private String password ="123456";
 
     private ArrayList<Flight> flights;
     private ArrayList<Hotel>hotels;
@@ -44,22 +53,22 @@ public class Search {
             //加载驱动程序
             Class.forName(driver);
             //1.getConnection()方法，连接MySQL数据库！！
-            Date date=new Date();
-            switch (getMonth(dept_date)-date.getMonth()){
+//            Date date=new Date();
+//            switch (getMonth(dept_date)-date.getMonth()){
 //                case 0:flight_url="jdbc:mysql://111.231.132.139:3306/Flight?characterEncoding=utf8&useSSL=true";break;
-                case 0:flight_url="jdbc:mysql://111.231.132.139:3306/Flight?characterEncoding=utf8&useSSL=true";break;
-                case 1:flight_url="jdbc:mysql://119.23.23.245:3306/Flight?characterEncoding=utf8&useSSL=true";break;
-                case 2:flight_url="jdbc:mysql://101.200.58.140:3306/Flight?characterEncoding=utf8&useSSL=true";break;
-                case 3:flight_url="jdbc:mysql://39.106.192.93:3306/Flight?characterEncoding=utf8&useSSL=true";break;
-                case 4:flight_url="jdbc:mysql://120.78.161.197:3306/Flight?characterEncoding=utf8&useSSL=true";break;
-                default:{
-                    Flight f=new Flight();
-                    f.setPrice((float)(1<<30));
-                    flights.add(f);
-                    return flights;
-                }
-            }
+//                case 1:flight_url="jdbc:mysql://119.23.23.245:3306/Flight?characterEncoding=utf8&useSSL=true";break;
+//                case 2:flight_url="jdbc:mysql://101.200.58.140:3306/Flight?characterEncoding=utf8&useSSL=true";break;
+//                case 3:flight_url="jdbc:mysql://39.106.192.93:3306/Flight?characterEncoding=utf8&useSSL=true";break;
+//                case 4:flight_url="jdbc:mysql://120.78.161.197:3306/Flight?characterEncoding=utf8&useSSL=true";break;
+//                default:{
+//                    Flight f=new Flight();
+//                    f.setPrice((float)(1<<30));
+//                    flights.add(f);
+//                    return flights;
+//                }
+//            }
             con = DriverManager.getConnection(flight_url, user, password);
+//            con=DriverManager.getConnection(flight_url);
             if (con.isClosed())
                 System.out.println("Failed to connect to the Database!");
             //2.创建statement类对象，用来执行SQL语句！！
@@ -92,7 +101,7 @@ public class Search {
             }
 
             String sql="select ";
-            sql=sql+select+" from FlightInfo where "+where;
+            sql=sql+select+" from flightinfo where "+where+" order by price asc";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1,dept_city);
             stmt.setString(2,arv_city);
@@ -142,8 +151,8 @@ public class Search {
 
             //3.ResultSet类，用来存放获取的结果集！！
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()){
-                Flight f=new Flight();
+            if (rs.next()) {
+                Flight f = new Flight();
                 f.setFlight_id(rs.getString("flight_id"));
 //                f.setFlight_number(rs.getString("flight_number"));
                 f.setAirline(rs.getString("airline"));
@@ -161,33 +170,33 @@ public class Search {
                 f.setPrice(rs.getFloat("price"));
                 f.setFlight_day(rs.getInt("flight_day"));
                 flights.add(f);
-            }
-            while (rs.next()) {
-                Flight f=new Flight();
-                if(flights.size()==0){
-                    int a=0;
-                }
-                f.setPrice(rs.getFloat("price"));
-                if (f.getPrice()==flights.get(0).getPrice()){
-                    f.setFlight_id(rs.getString("flight_id"));
+
+                while (rs.next()) {
+                    Flight f1 = new Flight();
+                    if (flights.size() == 0) {
+                        int a = 0;
+                    }
+                    f1.setPrice(rs.getFloat("price"));
+                    if (f1.getPrice() == flights.get(0).getPrice()) {
+                        f1.setFlight_id(rs.getString("flight_id"));
 //                    f.setFlight_number(rs.getString("flight_number"));
-                    f.setAirline(rs.getString("airline"));
+                        f1.setAirline(rs.getString("airline"));
 //                    f.setModel(rs.getString("model"));
-                    f.setDept_date(rs.getString("dept_date"));
-                    f.setDept_time(rs.getString("dept_time"));
-                    f.setDept_airport(rs.getString("dept_airport"));
-                    f.setDept_city(rs.getString("dept_city"));
-                    f.setArv_date(rs.getString("arv_date"));
-                    f.setArv_time(rs.getString("arv_time"));
-                    f.setArv_airport(rs.getString("arv_airport"));
-                    f.setArv_city(rs.getString("arv_city"));
-                    f.setOntime_rate(rs.getFloat("ontime_rate"));
+                        f1.setDept_date(rs.getString("dept_date"));
+                        f1.setDept_time(rs.getString("dept_time"));
+                        f1.setDept_airport(rs.getString("dept_airport"));
+                        f1.setDept_city(rs.getString("dept_city"));
+                        f1.setArv_date(rs.getString("arv_date"));
+                        f1.setArv_time(rs.getString("arv_time"));
+                        f1.setArv_airport(rs.getString("arv_airport"));
+                        f1.setArv_city(rs.getString("arv_city"));
+                        f1.setOntime_rate(rs.getFloat("ontime_rate"));
 //                    f.setSeat_type(rs.getString("seat_type"));
-                    f.setPrice(rs.getFloat("price"));
-                    f.setFlight_day(rs.getInt("flight_day"));
-                    flights.add(f);
+                        f1.setPrice(rs.getFloat("price"));
+                        f1.setFlight_day(rs.getInt("flight_day"));
+                        flights.add(f1);
+                    } else break;
                 }
-                else break;
             }
             rs.close();
             con.close();
@@ -203,7 +212,8 @@ public class Search {
             e.printStackTrace();
         } finally {
 //            System.out.println("数据库数据成功获取！！");
-            System.out.println(dept_date+dept_city+"至"+arv_city+"Flight数据成功获取！！");
+            if(flights.size()!=0)System.out.println(dept_date+dept_city+"至"+arv_city+"Flight数据成功获取！！");
+            else System.out.println(dept_date+dept_city+"至"+arv_city+"Flight未获取到数据！！");
         }
         if (flights.size()!=0)return flights;
         else {
@@ -226,6 +236,7 @@ public class Search {
             Class.forName(driver);
             //1.getConnection()方法，连接MySQL数据库！！
             con = DriverManager.getConnection(hotel_url, user, password);
+//            con=DriverManager.getConnection(hotel_url);
             if (con.isClosed())
                 System.out.println("Failed to connect to the Database!");
             //2.创建statement类对象，用来执行SQL语句！！
@@ -251,7 +262,7 @@ public class Search {
 
             //酒店星级限制
             if (hotelOption.hotel_star.size()!=0){
-                if (hotelOption.hotel_star.size()!=0)where=where+" or (hotel_star=?";
+                if (hotelOption.hotel_type.size()!=0)where=where+" or (hotel_star=?";
                 else where = where + " and(hotel_star=?";
                 for (int i = 1; i < hotelOption.hotel_star.size(); ++i) where = where + " or hotel_star=?";
                 where = where + ")";
@@ -259,7 +270,7 @@ public class Search {
 
             if (hotelOption.hotel_type.size()!=0)where=where+")";
 
-            String sql="select "+select+" from HotelInfo where "+where+" order by hotel_price asc";
+            String sql="select "+select+" from hotelinfo where "+where+" order by hotel_price asc";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1,hotel_city);
             stmt.setString(2,come_date);
@@ -296,7 +307,7 @@ public class Search {
             if (hotelOption.hotel_type.size()!=0){
                 for (int i = 0; i < hotelOption.hotel_type.size(); ++i) {
                     ++num;
-                    stmt.setString(num, "%"+hotelOption.hotel_type.get(i)+"%");
+                    stmt.setString(num, hotelOption.hotel_type.get(i));
                 }
             }
 
@@ -304,14 +315,14 @@ public class Search {
             if (hotelOption.hotel_star.size()!=0){
                 for (int i = 0; i < hotelOption.hotel_star.size(); ++i) {
                     ++num;
-                    stmt.setString(num, "%"+hotelOption.hotel_star.get(i)+"%");
+                    stmt.setString(num, hotelOption.hotel_star.get(i));
                 }
             }
 
             //3.ResultSet类，用来存放获取的结果集！！
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()){
-                Hotel h=new Hotel();
+            if (rs.next()) {
+                Hotel h = new Hotel();
                 h.setCome_date(rs.getString("come_date"));
                 h.setHotel_address(rs.getString("hotel_address"));
                 h.setHotel_type(rs.getString("hotel_type"));
@@ -324,25 +335,25 @@ public class Search {
                 h.setUser_recommend(rs.getFloat("user_recommend"));
                 h.setUser_number(rs.getInt("user_number"));
                 hotels.add(h);
-            }
-            while (rs.next()){
-                Hotel h=new Hotel();
-                h.setHotel_price(rs.getFloat("hotel_price"));
-                if (h.getHotel_price()==hotels.get(0).getHotel_price()) {
-                    h.setCome_date(rs.getString("come_date"));
-                    h.setHotel_address(rs.getString("hotel_address"));
-                    h.setHotel_type(rs.getString("hotel_type"));
-                    h.setHotel_star(rs.getString("hotel_star"));
-                    h.setHotel_city(rs.getString("hotel_city"));
-                    h.setHotel_comment(rs.getString("hotel_comment"));
-                    h.setHotel_name(rs.getString("hotel_name"));
-                    h.setHotel_price(rs.getFloat("hotel_price"));
-                    h.setHotel_score(rs.getFloat("hotel_score"));
-                    h.setUser_recommend(rs.getFloat("user_recommend"));
-                    h.setUser_number(rs.getInt("user_number"));
-                    hotels.add(h);
+
+                while (rs.next()) {
+                    Hotel h1 = new Hotel();
+                    h1.setHotel_price(rs.getFloat("hotel_price"));
+                    if (h1.getHotel_price() == hotels.get(0).getHotel_price()) {
+                        h1.setCome_date(rs.getString("come_date"));
+                        h1.setHotel_address(rs.getString("hotel_address"));
+                        h1.setHotel_type(rs.getString("hotel_type"));
+                        h1.setHotel_star(rs.getString("hotel_star"));
+                        h1.setHotel_city(rs.getString("hotel_city"));
+                        h1.setHotel_comment(rs.getString("hotel_comment"));
+                        h1.setHotel_name(rs.getString("hotel_name"));
+                        h1.setHotel_price(rs.getFloat("hotel_price"));
+                        h1.setHotel_score(rs.getFloat("hotel_score"));
+                        h1.setUser_recommend(rs.getFloat("user_recommend"));
+                        h1.setUser_number(rs.getInt("user_number"));
+                        hotels.add(h1);
+                    } else break;
                 }
-                else break;
             }
             rs.close();
             con.close();
@@ -357,7 +368,8 @@ public class Search {
             // TODO: handle exception
             e.printStackTrace();
         } finally {
-            System.out.println(come_date+hotel_city+"Hotel数据成功获取！！");
+            if(hotels.size()!=0)System.out.println(come_date+hotel_city+"Hotel数据成功获取！！");
+            else System.out.println(come_date+hotel_city+"Hotel未获取到数据！！");
         }
 
         if (hotels.size()!=0)return hotels;

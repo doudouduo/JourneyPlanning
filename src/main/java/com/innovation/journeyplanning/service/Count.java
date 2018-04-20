@@ -27,10 +27,16 @@ public class Count {
             //计算符合要求的flight最低价及航班
             for (int i=0;i<day;++i){
                 String date=getDate(start_date,i);
-                for (int j=0;j<city.size();++j){
+                for (int j=0;j<city.size()-1;++j){
                     for (int k=j+1;k<city.size();++k){
                         flights[i][j][k]=search.SearchFlight(city.get(j),city.get(k),date,flightOption);
-                        flights[i][k][j]=search.SearchFlight(city.get(k),city.get(j),date,flightOption);
+                        if (j==0||k==city.size()-1){
+                            Flight f=new Flight();
+                            flights[i][k][j]=new ArrayList<Flight>();
+                            f.setPrice((float)(1<<30));
+                            flights[i][k][j].add(f);
+                        }
+                        else flights[i][k][j]=search.SearchFlight(city.get(k),city.get(j),date,flightOption);
                     }
                 }
             }
@@ -39,8 +45,11 @@ public class Count {
             for (int i=0;i<day;++i){
                 String date=getDate(start_date,i);
                 for (int j=0;j<city.size();++j) {
-//                    hotels[i][j]=new ArrayList<>();
                     hotels[i][j] = search.SearchHotel(city.get(j), date, hotelOption);
+                    if (hotels[i][j].size()==1&&hotels[i][j].get(0).getHotel_price()==(float)(1<<30)){
+                        hotelOption.hotel_star.clear();
+                        hotels[i][j]= search.SearchHotel(city.get(j), date, hotelOption);
+                    }
                 }
             }
 
@@ -51,7 +60,7 @@ public class Count {
                     for (int k=0;k<city.size();++k)cost[i][j][k]=(float)(1<<30);
             //计算cost数组
             for (int i=0;i<day;++i){
-                for (int j=0;j<city.size();++j){
+                for (int j=0;j<city.size()-1;++j){
                     for (int k=j+1;k<city.size();++k){
                         if(i+time.get(k)<day&&flights[i][j][k].get(0).getPrice()!=(float)(1<<30)&&hotels[i][k].get(0).getHotel_price()!=(float)(1<<30)) {
                             cost[i][j][k] = flights[i][j][k].get(0).getPrice() + hotels[i][k].get(0).getHotel_price() * time.get(k);
