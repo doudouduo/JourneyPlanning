@@ -1,0 +1,5 @@
+rabbitmq:
+    host: 182.254.138.108
+    port: 15672
+    username: woshinibaba
+    password: nishiwoerzi

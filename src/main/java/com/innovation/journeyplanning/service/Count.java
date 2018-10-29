@@ -2,14 +2,18 @@ package com.innovation.journeyplanning.service;
 
 import com.innovation.journeyplanning.entity.*;
 import com.innovation.journeyplanning.util.Search;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 @Component
 public class Count {
@@ -24,19 +28,39 @@ public class Count {
             flights=new ArrayList[day][city.size()][city.size()];
             hotels=new ArrayList[day][city.size()];
             cost = new Float[day][city.size()][city.size()];
+            Map<String, String> cityJsonList = new HashMap<>();
+
+            //读取city json列表
+            String CityJsonData = FileUtils.readFileToString(ResourceUtils.
+                    getFile("classpath:city_list.json"), "UTF-8");
+            JSONObject CityJsonObject = JSONObject.fromObject(CityJsonData);
+            JSONArray CityJsonArray = CityJsonObject.getJSONArray("热门");
+            for (int i = 0; i < CityJsonArray.size(); ++i) {
+                JSONObject jsonObject = CityJsonArray.getJSONObject(i);
+                String display = jsonObject.getString("display");
+                String code = jsonObject.getString("code");
+                cityJsonList.put(display, code);
+            }
+
             //计算符合要求的flight最低价及航班
             for (int i=0;i<day;++i){
                 String date=getDate(start_date,i);
                 for (int j=0;j<city.size()-1;++j){
                     for (int k=j+1;k<city.size();++k){
-                        flights[i][j][k]=search.SearchFlight(city.get(j),city.get(k),date,flightOption);
-                        if (j==0||k==city.size()-1){
+                        if (city.get(j)!=city.get(k))flights[i][j][k]=search.SearchFlight(cityJsonList.get(city.get(j)),cityJsonList.get(city.get(k)),date,flightOption);
+                        else{
                             Flight f=new Flight();
                             flights[i][k][j]=new ArrayList<Flight>();
                             f.setPrice((float)(1<<30));
                             flights[i][k][j].add(f);
                         }
-                        else flights[i][k][j]=search.SearchFlight(city.get(k),city.get(j),date,flightOption);
+                        if (j==0||k==city.size()-1||city.get(j)==city.get(k)){
+                            Flight f=new Flight();
+                            flights[i][k][j]=new ArrayList<Flight>();
+                            f.setPrice((float)(1<<30));
+                            flights[i][k][j].add(f);
+                        }
+                        else flights[i][k][j]=search.SearchFlight(cityJsonList.get(city.get(k)),cityJsonList.get(city.get(j)),date,flightOption);
                     }
                 }
             }
@@ -86,6 +110,7 @@ public class Count {
 
             return new Result(flights,hotels,cost);
         }catch (ParseException e){}
+        catch (IOException e){}
         return null;
     }
     public int CountDay(String smdate,String bdate) throws ParseException{

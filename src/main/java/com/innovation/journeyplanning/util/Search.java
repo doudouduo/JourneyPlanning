@@ -30,8 +30,8 @@ public class Search {
 //    private String flight_url = "jdbc:hive2://192.168.56.101:10000/default";
 //    private String hotel_url = "jdbc:hive2://192.168.56.101:10000/default";
     //远程memory数据库
-//    private String flight_url = "jdbc:mysql://111.231.107.142:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
-//    private String hotel_url="jdbc:mysql://111.231.107.142:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
+//    private String flight_url = "jdbc:mysql://10.105.48.129:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
+//    private String hotel_url="jdbc:mysql://10.105.48.129:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
 
 
     //MySQL配置时的用户名
@@ -219,6 +219,9 @@ public class Search {
         else {
             Flight f=new Flight();
             f.setPrice((float)(1<<30));
+            f.setDept_city(dept_city);
+            f.setArv_city(arv_city);
+            f.setDept_date(dept_date);
             flights.add(f);
             return flights;
         }
