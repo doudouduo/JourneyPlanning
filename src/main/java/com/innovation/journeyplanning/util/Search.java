@@ -4,15 +4,17 @@ import com.innovation.journeyplanning.entity.Flight;
 import com.innovation.journeyplanning.entity.FlightOption;
 import com.innovation.journeyplanning.entity.Hotel;
 import com.innovation.journeyplanning.entity.HotelOption;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.Date;
-import java.util.Locale;
 
 @Component
 public class Search {
@@ -23,8 +25,8 @@ public class Search {
 //    private String flight_url = "jdbc:mysql://111.231.132.139:3306/Flight?characterEncoding=utf8&useSSL=true";
 //    private String hotel_url="jdbc:mysql://119.23.41.32:3306/Hotel?characterEncoding=utf8&useSSL=true";
     //本地数据库
-    private String flight_url = "jdbc:mysql://localhost:3306/JourneyPlanningMixed?characterEncoding=utf8&useSSL=true";
-    private String hotel_url="jdbc:mysql://localhost:3306/JourneyPlanningMixed?characterEncoding=utf8&useSSL=true";
+    private String flight_url = "jdbc:mysql://localhost:3306/JourneyPlanning?characterEncoding=utf8&useSSL=true";
+    private String hotel_url="jdbc:mysql://localhost:3306/JourneyPlanning?characterEncoding=utf8&useSSL=true";
     //本地hive数据库
 //    private String driver = "com.cloudera.hive.jdbc41.HS1Driver";
 //    private String flight_url = "jdbc:hive2://192.168.56.101:10000/default";
@@ -67,6 +69,21 @@ public class Search {
 //                    return flights;
 //                }
 //            }
+
+            //读取city json列表
+            Map<String, String> cityJsonList = new HashMap<>();
+            String CityJsonData = FileUtils.readFileToString(ResourceUtils.
+                    getFile("classpath:city_list.json"), "UTF-8");
+            JSONObject CityJsonObject = JSONObject.fromObject(CityJsonData);
+            JSONArray CityJsonArray = CityJsonObject.getJSONArray("热门");
+            for (int i = 0; i < CityJsonArray.size(); ++i) {
+                JSONObject jsonObject = CityJsonArray.getJSONObject(i);
+                String display = jsonObject.getString("display");
+                String code = jsonObject.getString("code");
+                cityJsonList.put(display, code);
+            }
+
+
             con = DriverManager.getConnection(flight_url, user, password);
 //            con=DriverManager.getConnection(flight_url);
             if (con.isClosed())
@@ -103,8 +120,8 @@ public class Search {
             String sql="select ";
             sql=sql+select+" from flightinfo where "+where+" order by price asc";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1,dept_city);
-            stmt.setString(2,arv_city);
+            stmt.setString(1,cityJsonList.get(dept_city));
+            stmt.setString(2,cityJsonList.get(arv_city));
             stmt.setString(3,dept_date);
 //            if (!flightOption.isstop.equals("")){
 //                ++num;
@@ -160,11 +177,13 @@ public class Search {
                 f.setDept_date(rs.getString("dept_date"));
                 f.setDept_time(rs.getString("dept_time"));
                 f.setDept_airport(rs.getString("dept_airport"));
-                f.setDept_city(rs.getString("dept_city"));
+//                f.setDept_city(rs.getString("dept_city"));
+                f.setDept_city(dept_city);
                 f.setArv_date(rs.getString("arv_date"));
                 f.setArv_time(rs.getString("arv_time"));
                 f.setArv_airport(rs.getString("arv_airport"));
-                f.setArv_city(rs.getString("arv_city"));
+//                f.setArv_city(rs.getString("arv_city"));
+                f.setArv_city(arv_city);
                 f.setOntime_rate(rs.getFloat("ontime_rate"));
 //                f.setSeat_type(rs.getString("seat_type"));
                 f.setPrice(rs.getFloat("price"));
@@ -185,11 +204,13 @@ public class Search {
                         f1.setDept_date(rs.getString("dept_date"));
                         f1.setDept_time(rs.getString("dept_time"));
                         f1.setDept_airport(rs.getString("dept_airport"));
-                        f1.setDept_city(rs.getString("dept_city"));
+//                        f1.setDept_city(rs.getString("dept_city"));
+                        f1.setDept_city(dept_city);
                         f1.setArv_date(rs.getString("arv_date"));
                         f1.setArv_time(rs.getString("arv_time"));
                         f1.setArv_airport(rs.getString("arv_airport"));
-                        f1.setArv_city(rs.getString("arv_city"));
+//                        f1.setArv_city(rs.getString("arv_city"));
+                        f1.setArv_city(arv_city);
                         f1.setOntime_rate(rs.getFloat("ontime_rate"));
 //                    f.setSeat_type(rs.getString("seat_type"));
                         f1.setPrice(rs.getFloat("price"));
