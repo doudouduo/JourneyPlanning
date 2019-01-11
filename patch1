@@ -1,0 +1,2281 @@
+diff --git a/META-INF/MANIFEST.MF b/META-INF/MANIFEST.MF
+deleted file mode 100644
+index 58630c0..0000000
+--- a/META-INF/MANIFEST.MF
++++ /dev/null
+@@ -1,2 +0,0 @@
+-Manifest-Version: 1.0
+-
+diff --git a/journeyplanning.eml b/journeyplanning.eml
+deleted file mode 100644
+index c9cfc65..0000000
+--- a/journeyplanning.eml
++++ /dev/null
+@@ -1,127 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<component LANGUAGE_LEVEL="JDK_1_8" jdk="1.8" jdk_type="JavaSDK">
+-	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+-	<contentEntry url="file://$MODULE_DIR$">
+-		<testFolder url="file://$MODULE_DIR$/src/test/java"/>
+-		<excludeFolder url="file://$MODULE_DIR$/target"/>
+-	</contentEntry>
+-	<lib name="Maven: org.yaml:snakeyaml:1.17" scope="RUNTIME"/>
+-	<lib name="Maven: mysql:mysql-connector-java:5.1.45" scope="RUNTIME"/>
+-	<lib name="Maven: org.springframework.boot:spring-boot-starter-test:1.5.10.RELEASE" scope="TEST"/>
+-	<lib name="Maven: org.springframework.boot:spring-boot-test:1.5.10.RELEASE" scope="TEST"/>
+-	<lib name="Maven: org.springframework.boot:spring-boot-test-autoconfigure:1.5.10.RELEASE" scope="TEST"/>
+-	<lib name="Maven: com.jayway.jsonpath:json-path:2.2.0" scope="TEST"/>
+-	<lib name="Maven: net.minidev:json-smart:2.2.1" scope="TEST"/>
+-	<lib name="Maven: net.minidev:accessors-smart:1.1" scope="TEST"/>
+-	<lib name="Maven: org.ow2.asm:asm:5.0.3" scope="TEST"/>
+-	<lib name="Maven: junit:junit:4.12" scope="TEST"/>
+-	<lib name="Maven: org.assertj:assertj-core:2.6.0" scope="TEST"/>
+-	<lib name="Maven: org.mockito:mockito-core:1.10.19" scope="TEST"/>
+-	<lib name="Maven: org.objenesis:objenesis:2.1" scope="TEST"/>
+-	<lib name="Maven: org.hamcrest:hamcrest-core:1.3" scope="TEST"/>
+-	<lib name="Maven: org.hamcrest:hamcrest-library:1.3" scope="TEST"/>
+-	<lib name="Maven: org.skyscreamer:jsonassert:1.4.0" scope="TEST"/>
+-	<lib name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" scope="TEST"/>
+-	<lib name="Maven: org.springframework:spring-test:4.3.14.RELEASE" scope="TEST"/>
+-	<levels>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-logging:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: ch.qos.logback:logback-classic:1.1.11" value="project"/>
+-		<level name="Maven: ch.qos.logback:logback-core:1.1.11" value="project"/>
+-		<level name="Maven: org.slf4j:jul-to-slf4j:1.7.25" value="project"/>
+-		<level name="Maven: org.slf4j:log4j-over-slf4j:1.7.25" value="project"/>
+-		<level name="Maven: org.yaml:snakeyaml:1.17" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-aop:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-aop:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.aspectj:aspectjweaver:1.8.13" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-jdbc:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.apache.tomcat:tomcat-jdbc:8.5.27" value="project"/>
+-		<level name="Maven: org.apache.tomcat:tomcat-juli:8.5.27" value="project"/>
+-		<level name="Maven: org.springframework:spring-jdbc:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.hibernate:hibernate-core:5.0.12.Final" value="project"/>
+-		<level name="Maven: org.jboss.logging:jboss-logging:3.3.1.Final" value="project"/>
+-		<level name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" value="project"/>
+-		<level name="Maven: org.javassist:javassist:3.21.0-GA" value="project"/>
+-		<level name="Maven: antlr:antlr:2.7.7" value="project"/>
+-		<level name="Maven: org.jboss:jandex:2.0.0.Final" value="project"/>
+-		<level name="Maven: dom4j:dom4j:1.6.1" value="project"/>
+-		<level name="Maven: org.hibernate.common:hibernate-commons-annotations:5.0.1.Final" value="project"/>
+-		<level name="Maven: org.hibernate:hibernate-entitymanager:5.0.12.Final" value="project"/>
+-		<level name="Maven: javax.transaction:javax.transaction-api:1.2" value="project"/>
+-		<level name="Maven: org.springframework.data:spring-data-jpa:1.11.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.data:spring-data-commons:1.13.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-orm:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-context:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-tx:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-beans:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.slf4j:slf4j-api:1.7.25" value="project"/>
+-		<level name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" value="project"/>
+-		<level name="Maven: org.springframework:spring-aspects:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: mysql:mysql-connector-java:5.1.45" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-test:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-test:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-test-autoconfigure:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: com.jayway.jsonpath:json-path:2.2.0" value="project"/>
+-		<level name="Maven: net.minidev:json-smart:2.2.1" value="project"/>
+-		<level name="Maven: net.minidev:accessors-smart:1.1" value="project"/>
+-		<level name="Maven: org.ow2.asm:asm:5.0.3" value="project"/>
+-		<level name="Maven: junit:junit:4.12" value="project"/>
+-		<level name="Maven: org.assertj:assertj-core:2.6.0" value="project"/>
+-		<level name="Maven: org.mockito:mockito-core:1.10.19" value="project"/>
+-		<level name="Maven: org.objenesis:objenesis:2.1" value="project"/>
+-		<level name="Maven: org.hamcrest:hamcrest-core:1.3" value="project"/>
+-		<level name="Maven: org.hamcrest:hamcrest-library:1.3" value="project"/>
+-		<level name="Maven: org.skyscreamer:jsonassert:1.4.0" value="project"/>
+-		<level name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" value="project"/>
+-		<level name="Maven: org.springframework:spring-core:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-test:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-tomcat:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.27" value="project"/>
+-		<level name="Maven: org.apache.tomcat:tomcat-annotations-api:8.5.27" value="project"/>
+-		<level name="Maven: org.apache.tomcat.embed:tomcat-embed-el:8.5.27" value="project"/>
+-		<level name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:8.5.27" value="project"/>
+-		<level name="Maven: org.hibernate:hibernate-validator:5.3.6.Final" value="project"/>
+-		<level name="Maven: javax.validation:validation-api:1.1.0.Final" value="project"/>
+-		<level name="Maven: com.fasterxml:classmate:1.3.4" value="project"/>
+-		<level name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.10" value="project"/>
+-		<level name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" value="project"/>
+-		<level name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.10" value="project"/>
+-		<level name="Maven: org.springframework:spring-web:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-webmvc:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-expression:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.boot:spring-boot-starter-amqp:1.5.10.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework:spring-messaging:4.3.14.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.amqp:spring-rabbit:1.7.6.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.amqp:spring-amqp:1.7.6.RELEASE" value="project"/>
+-		<level name="Maven: org.springframework.retry:spring-retry:1.2.2.RELEASE" value="project"/>
+-		<level name="Maven: com.rabbitmq:http-client:1.1.1.RELEASE" value="project"/>
+-		<level name="Maven: org.apache.httpcomponents:httpclient:4.5.5" value="project"/>
+-		<level name="Maven: org.apache.httpcomponents:httpcore:4.4.9" value="project"/>
+-		<level name="Maven: com.rabbitmq:amqp-client:4.0.3" value="project"/>
+-		<level name="Maven: net.sf.json-lib:json-lib:jdk15:2.4" value="project"/>
+-		<level name="Maven: commons-beanutils:commons-beanutils:1.9.3" value="project"/>
+-		<level name="Maven: commons-collections:commons-collections:3.2.2" value="project"/>
+-		<level name="Maven: commons-lang:commons-lang:2.5" value="project"/>
+-		<level name="Maven: net.sf.ezmorph:ezmorph:1.0.6" value="project"/>
+-		<level name="Maven: org.apache.hive:hive-jdbc:1.1.0-cdh5.12.0" value="project"/>
+-		<level name="Maven: org.apache.hive:hive-cli:1.1.0-cdh5.12.0" value="project"/>
+-		<level name="Maven: commons-codec:commons-codec:1.3" value="project"/>
+-		<level name="Maven: commons-logging:commons-logging:1.1.1" value="project"/>
+-		<level name="Maven: hive:metastore:1.0" value="project"/>
+-		<level name="Maven: hive:service:1.0" value="project"/>
+-		<level name="Maven: hive:jdbc:4.1" value="project"/>
+-		<level name="Maven: http:client:4.1.3" value="project"/>
+-		<level name="Maven: http:core:4.1.3" value="project"/>
+-		<level name="Maven: lib:fb303:0.9.0" value="project"/>
+-		<level name="Maven: lib:thrift:0.9.0" value="project"/>
+-		<level name="Maven: log4j:log4j:1.2.14" value="project"/>
+-		<level name="Maven: ql:ql:1.0" value="project"/>
+-		<level name="Maven: slf4j:api:1.5.11" value="project"/>
+-		<level name="Maven: slf4j:log4j12:1.5.11" value="project"/>
+-		<level name="Maven: TCLIService:Client:1.0" value="project"/>
+-	</levels>
+-</component>
+diff --git a/journeyplanning.userlibraries b/journeyplanning.userlibraries
+deleted file mode 100644
+index d328db0..0000000
+--- a/journeyplanning.userlibraries
++++ /dev/null
+@@ -1,304 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<eclipse-userlibraries>
+-  <library name="Maven: TCLIService:Client:1.0">
+-    <archive path="/Users/mybook/.m2/repository/TCLIService/Client/1.0/Client-1.0.jar" />
+-  </library>
+-  <library name="Maven: antlr:antlr:2.7.7">
+-    <archive path="/Users/mybook/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar" />
+-  </library>
+-  <library name="Maven: ch.qos.logback:logback-classic:1.1.11">
+-    <archive path="/Users/mybook/.m2/repository/ch/qos/logback/logback-classic/1.1.11/logback-classic-1.1.11.jar" />
+-  </library>
+-  <library name="Maven: ch.qos.logback:logback-core:1.1.11">
+-    <archive path="/Users/mybook/.m2/repository/ch/qos/logback/logback-core/1.1.11/logback-core-1.1.11.jar" />
+-  </library>
+-  <library name="Maven: com.fasterxml:classmate:1.3.4">
+-    <archive path="/Users/mybook/.m2/repository/com/fasterxml/classmate/1.3.4/classmate-1.3.4.jar" />
+-  </library>
+-  <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0">
+-    <archive path="/Users/mybook/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.8.0/jackson-annotations-2.8.0.jar" />
+-  </library>
+-  <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.10">
+-    <archive path="/Users/mybook/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.10/jackson-core-2.8.10.jar" />
+-  </library>
+-  <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.10">
+-    <archive path="/Users/mybook/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.8.10/jackson-databind-2.8.10.jar" />
+-  </library>
+-  <library name="Maven: com.jayway.jsonpath:json-path:2.2.0">
+-    <archive path="/Users/mybook/.m2/repository/com/jayway/jsonpath/json-path/2.2.0/json-path-2.2.0.jar" />
+-  </library>
+-  <library name="Maven: com.rabbitmq:amqp-client:4.0.3">
+-    <archive path="/Users/mybook/.m2/repository/com/rabbitmq/amqp-client/4.0.3/amqp-client-4.0.3.jar" />
+-  </library>
+-  <library name="Maven: com.rabbitmq:http-client:1.1.1.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/com/rabbitmq/http-client/1.1.1.RELEASE/http-client-1.1.1.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1">
+-    <archive path="/Users/mybook/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar" />
+-  </library>
+-  <library name="Maven: commons-beanutils:commons-beanutils:1.9.3">
+-    <archive path="/Users/mybook/.m2/repository/commons-beanutils/commons-beanutils/1.9.3/commons-beanutils-1.9.3.jar" />
+-  </library>
+-  <library name="Maven: commons-codec:commons-codec:1.3">
+-    <archive path="/Users/mybook/.m2/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar" />
+-  </library>
+-  <library name="Maven: commons-collections:commons-collections:3.2.2">
+-    <archive path="/Users/mybook/.m2/repository/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar" />
+-  </library>
+-  <library name="Maven: commons-lang:commons-lang:2.5">
+-    <archive path="/Users/mybook/.m2/repository/commons-lang/commons-lang/2.5/commons-lang-2.5.jar" />
+-  </library>
+-  <library name="Maven: commons-logging:commons-logging:1.1.1">
+-    <archive path="/Users/mybook/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" />
+-  </library>
+-  <library name="Maven: dom4j:dom4j:1.6.1">
+-    <archive path="/Users/mybook/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" />
+-  </library>
+-  <library name="Maven: hive:jdbc:4.1">
+-    <archive path="/Users/mybook/.m2/repository/hive/jdbc/4.1/jdbc-4.1.jar" />
+-  </library>
+-  <library name="Maven: hive:metastore:1.0">
+-    <archive path="/Users/mybook/.m2/repository/hive/metastore/1.0/metastore-1.0.jar" />
+-  </library>
+-  <library name="Maven: hive:service:1.0">
+-    <archive path="/Users/mybook/.m2/repository/hive/service/1.0/service-1.0.jar" />
+-  </library>
+-  <library name="Maven: http:client:4.1.3">
+-    <archive path="/Users/mybook/.m2/repository/http/client/4.1.3/client-4.1.3.jar" />
+-  </library>
+-  <library name="Maven: http:core:4.1.3">
+-    <archive path="/Users/mybook/.m2/repository/http/core/4.1.3/core-4.1.3.jar" />
+-  </library>
+-  <library name="Maven: javax.transaction:javax.transaction-api:1.2">
+-    <archive path="/Users/mybook/.m2/repository/javax/transaction/javax.transaction-api/1.2/javax.transaction-api-1.2.jar" />
+-  </library>
+-  <library name="Maven: javax.validation:validation-api:1.1.0.Final">
+-    <archive path="/Users/mybook/.m2/repository/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar" />
+-  </library>
+-  <library name="Maven: junit:junit:4.12">
+-    <archive path="/Users/mybook/.m2/repository/junit/junit/4.12/junit-4.12.jar" />
+-  </library>
+-  <library name="Maven: lib:fb303:0.9.0">
+-    <archive path="/Users/mybook/.m2/repository/lib/fb303/0.9.0/fb303-0.9.0.jar" />
+-  </library>
+-  <library name="Maven: lib:thrift:0.9.0">
+-    <archive path="/Users/mybook/.m2/repository/lib/thrift/0.9.0/thrift-0.9.0.jar" />
+-  </library>
+-  <library name="Maven: log4j:log4j:1.2.14">
+-    <archive path="/Users/mybook/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar" />
+-  </library>
+-  <library name="Maven: mysql:mysql-connector-java:5.1.45">
+-    <archive path="/Users/mybook/.m2/repository/mysql/mysql-connector-java/5.1.45/mysql-connector-java-5.1.45.jar" />
+-  </library>
+-  <library name="Maven: net.minidev:accessors-smart:1.1">
+-    <archive path="/Users/mybook/.m2/repository/net/minidev/accessors-smart/1.1/accessors-smart-1.1.jar" />
+-  </library>
+-  <library name="Maven: net.minidev:json-smart:2.2.1">
+-    <archive path="/Users/mybook/.m2/repository/net/minidev/json-smart/2.2.1/json-smart-2.2.1.jar" />
+-  </library>
+-  <library name="Maven: net.sf.ezmorph:ezmorph:1.0.6">
+-    <archive path="/Users/mybook/.m2/repository/net/sf/ezmorph/ezmorph/1.0.6/ezmorph-1.0.6.jar" />
+-  </library>
+-  <library name="Maven: net.sf.json-lib:json-lib:jdk15:2.4">
+-    <archive path="/Users/mybook/.m2/repository/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar" />
+-  </library>
+-  <library name="Maven: org.apache.hive:hive-cli:1.1.0-cdh5.12.0">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/hive/hive-cli/1.1.0-cdh5.12.0/hive-cli-1.1.0-cdh5.12.0.jar" />
+-  </library>
+-  <library name="Maven: org.apache.hive:hive-jdbc:1.1.0-cdh5.12.0">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/hive/hive-jdbc/1.1.0-cdh5.12.0/hive-jdbc-1.1.0-cdh5.12.0.jar" />
+-  </library>
+-  <library name="Maven: org.apache.httpcomponents:httpclient:4.5.5">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/httpcomponents/httpclient/4.5.5/httpclient-4.5.5.jar" />
+-  </library>
+-  <library name="Maven: org.apache.httpcomponents:httpcore:4.4.9">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar" />
+-  </library>
+-  <library name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.27">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/8.5.27/tomcat-embed-core-8.5.27.jar" />
+-  </library>
+-  <library name="Maven: org.apache.tomcat.embed:tomcat-embed-el:8.5.27">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/8.5.27/tomcat-embed-el-8.5.27.jar" />
+-  </library>
+-  <library name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:8.5.27">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/8.5.27/tomcat-embed-websocket-8.5.27.jar" />
+-  </library>
+-  <library name="Maven: org.apache.tomcat:tomcat-annotations-api:8.5.27">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/tomcat/tomcat-annotations-api/8.5.27/tomcat-annotations-api-8.5.27.jar" />
+-  </library>
+-  <library name="Maven: org.apache.tomcat:tomcat-jdbc:8.5.27">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/tomcat/tomcat-jdbc/8.5.27/tomcat-jdbc-8.5.27.jar" />
+-  </library>
+-  <library name="Maven: org.apache.tomcat:tomcat-juli:8.5.27">
+-    <archive path="/Users/mybook/.m2/repository/org/apache/tomcat/tomcat-juli/8.5.27/tomcat-juli-8.5.27.jar" />
+-  </library>
+-  <library name="Maven: org.aspectj:aspectjweaver:1.8.13">
+-    <archive path="/Users/mybook/.m2/repository/org/aspectj/aspectjweaver/1.8.13/aspectjweaver-1.8.13.jar" />
+-  </library>
+-  <library name="Maven: org.assertj:assertj-core:2.6.0">
+-    <archive path="/Users/mybook/.m2/repository/org/assertj/assertj-core/2.6.0/assertj-core-2.6.0.jar" />
+-  </library>
+-  <library name="Maven: org.hamcrest:hamcrest-core:1.3">
+-    <archive path="/Users/mybook/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" />
+-  </library>
+-  <library name="Maven: org.hamcrest:hamcrest-library:1.3">
+-    <archive path="/Users/mybook/.m2/repository/org/hamcrest/hamcrest-library/1.3/hamcrest-library-1.3.jar" />
+-  </library>
+-  <library name="Maven: org.hibernate.common:hibernate-commons-annotations:5.0.1.Final">
+-    <archive path="/Users/mybook/.m2/repository/org/hibernate/common/hibernate-commons-annotations/5.0.1.Final/hibernate-commons-annotations-5.0.1.Final.jar" />
+-  </library>
+-  <library name="Maven: org.hibernate:hibernate-core:5.0.12.Final">
+-    <archive path="/Users/mybook/.m2/repository/org/hibernate/hibernate-core/5.0.12.Final/hibernate-core-5.0.12.Final.jar" />
+-  </library>
+-  <library name="Maven: org.hibernate:hibernate-entitymanager:5.0.12.Final">
+-    <archive path="/Users/mybook/.m2/repository/org/hibernate/hibernate-entitymanager/5.0.12.Final/hibernate-entitymanager-5.0.12.Final.jar" />
+-  </library>
+-  <library name="Maven: org.hibernate:hibernate-validator:5.3.6.Final">
+-    <archive path="/Users/mybook/.m2/repository/org/hibernate/hibernate-validator/5.3.6.Final/hibernate-validator-5.3.6.Final.jar" />
+-  </library>
+-  <library name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final">
+-    <archive path="/Users/mybook/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final.jar" />
+-  </library>
+-  <library name="Maven: org.javassist:javassist:3.21.0-GA">
+-    <archive path="/Users/mybook/.m2/repository/org/javassist/javassist/3.21.0-GA/javassist-3.21.0-GA.jar" />
+-  </library>
+-  <library name="Maven: org.jboss:jandex:2.0.0.Final">
+-    <archive path="/Users/mybook/.m2/repository/org/jboss/jandex/2.0.0.Final/jandex-2.0.0.Final.jar" />
+-  </library>
+-  <library name="Maven: org.jboss.logging:jboss-logging:3.3.1.Final">
+-    <archive path="/Users/mybook/.m2/repository/org/jboss/logging/jboss-logging/3.3.1.Final/jboss-logging-3.3.1.Final.jar" />
+-  </library>
+-  <library name="Maven: org.mockito:mockito-core:1.10.19">
+-    <archive path="/Users/mybook/.m2/repository/org/mockito/mockito-core/1.10.19/mockito-core-1.10.19.jar" />
+-  </library>
+-  <library name="Maven: org.objenesis:objenesis:2.1">
+-    <archive path="/Users/mybook/.m2/repository/org/objenesis/objenesis/2.1/objenesis-2.1.jar" />
+-  </library>
+-  <library name="Maven: org.ow2.asm:asm:5.0.3">
+-    <archive path="/Users/mybook/.m2/repository/org/ow2/asm/asm/5.0.3/asm-5.0.3.jar" />
+-  </library>
+-  <library name="Maven: org.skyscreamer:jsonassert:1.4.0">
+-    <archive path="/Users/mybook/.m2/repository/org/skyscreamer/jsonassert/1.4.0/jsonassert-1.4.0.jar" />
+-  </library>
+-  <library name="Maven: org.slf4j:jcl-over-slf4j:1.7.25">
+-    <archive path="/Users/mybook/.m2/repository/org/slf4j/jcl-over-slf4j/1.7.25/jcl-over-slf4j-1.7.25.jar" />
+-  </library>
+-  <library name="Maven: org.slf4j:jul-to-slf4j:1.7.25">
+-    <archive path="/Users/mybook/.m2/repository/org/slf4j/jul-to-slf4j/1.7.25/jul-to-slf4j-1.7.25.jar" />
+-  </library>
+-  <library name="Maven: org.slf4j:log4j-over-slf4j:1.7.25">
+-    <archive path="/Users/mybook/.m2/repository/org/slf4j/log4j-over-slf4j/1.7.25/log4j-over-slf4j-1.7.25.jar" />
+-  </library>
+-  <library name="Maven: org.slf4j:slf4j-api:1.7.25">
+-    <archive path="/Users/mybook/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.amqp:spring-amqp:1.7.6.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/amqp/spring-amqp/1.7.6.RELEASE/spring-amqp-1.7.6.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.amqp:spring-rabbit:1.7.6.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/amqp/spring-rabbit/1.7.6.RELEASE/spring-rabbit-1.7.6.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot/1.5.10.RELEASE/spring-boot-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/1.5.10.RELEASE/spring-boot-autoconfigure-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter/1.5.10.RELEASE/spring-boot-starter-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-amqp:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-amqp/1.5.10.RELEASE/spring-boot-starter-amqp-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-aop:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-aop/1.5.10.RELEASE/spring-boot-starter-aop-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/1.5.10.RELEASE/spring-boot-starter-data-jpa-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-jdbc:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/1.5.10.RELEASE/spring-boot-starter-jdbc-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-logging:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-logging/1.5.10.RELEASE/spring-boot-starter-logging-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-test:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-test/1.5.10.RELEASE/spring-boot-starter-test-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-tomcat:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/1.5.10.RELEASE/spring-boot-starter-tomcat-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-starter-web/1.5.10.RELEASE/spring-boot-starter-web-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-test:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-test/1.5.10.RELEASE/spring-boot-test-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.boot:spring-boot-test-autoconfigure:1.5.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/1.5.10.RELEASE/spring-boot-test-autoconfigure-1.5.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.data:spring-data-commons:1.13.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/data/spring-data-commons/1.13.10.RELEASE/spring-data-commons-1.13.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.data:spring-data-jpa:1.11.10.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/data/spring-data-jpa/1.11.10.RELEASE/spring-data-jpa-1.11.10.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework.retry:spring-retry:1.2.2.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/retry/spring-retry/1.2.2.RELEASE/spring-retry-1.2.2.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-aop:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-aop/4.3.14.RELEASE/spring-aop-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-aspects:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-aspects/4.3.14.RELEASE/spring-aspects-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-beans:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-beans/4.3.14.RELEASE/spring-beans-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-context:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-context/4.3.14.RELEASE/spring-context-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-core:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-core/4.3.14.RELEASE/spring-core-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-expression:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-expression/4.3.14.RELEASE/spring-expression-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-jdbc:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-jdbc/4.3.14.RELEASE/spring-jdbc-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-messaging:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-messaging/4.3.14.RELEASE/spring-messaging-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-orm:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-orm/4.3.14.RELEASE/spring-orm-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-test:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-test/4.3.14.RELEASE/spring-test-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-tx:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-tx/4.3.14.RELEASE/spring-tx-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-web:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-web/4.3.14.RELEASE/spring-web-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.springframework:spring-webmvc:4.3.14.RELEASE">
+-    <archive path="/Users/mybook/.m2/repository/org/springframework/spring-webmvc/4.3.14.RELEASE/spring-webmvc-4.3.14.RELEASE.jar" />
+-  </library>
+-  <library name="Maven: org.yaml:snakeyaml:1.17">
+-    <archive path="/Users/mybook/.m2/repository/org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar" />
+-  </library>
+-  <library name="Maven: ql:ql:1.0">
+-    <archive path="/Users/mybook/.m2/repository/ql/ql/1.0/ql-1.0.jar" />
+-  </library>
+-  <library name="Maven: slf4j:api:1.5.11">
+-    <archive path="/Users/mybook/.m2/repository/slf4j/api/1.5.11/api-1.5.11.jar" />
+-  </library>
+-  <library name="Maven: slf4j:log4j12:1.5.11">
+-    <archive path="/Users/mybook/.m2/repository/slf4j/log4j12/1.5.11/log4j12-1.5.11.jar" />
+-  </library>
+-  <library name="servlet-api">
+-    <archive path="/Library/apache-tomcat-9.0.1/lib/servlet-api.jar" />
+-  </library>
+-</eclipse-userlibraries>
+-
+diff --git a/out/artifacts/JourneyPlanning/JourneyPlanning.war b/out/artifacts/JourneyPlanning/JourneyPlanning.war
+deleted file mode 100644
+index 14a4516..0000000
+Binary files a/out/artifacts/JourneyPlanning/JourneyPlanning.war and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war/journeyplanning_war.war b/out/artifacts/journeyplanning_war/journeyplanning_war.war
+deleted file mode 100644
+index e7aae2b..0000000
+Binary files a/out/artifacts/journeyplanning_war/journeyplanning_war.war and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/META-INF/MANIFEST.MF b/out/artifacts/journeyplanning_war_exploded/META-INF/MANIFEST.MF
+deleted file mode 100644
+index f46d5f8..0000000
+--- a/out/artifacts/journeyplanning_war_exploded/META-INF/MANIFEST.MF
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Manifest-Version: 1.0
+-Implementation-Title: journeyplanning
+-Implementation-Version: 0.0.1-SNAPSHOT
+-Built-By: mybook
+-Implementation-Vendor-Id: com.innovation
+-Created-By: IntelliJ IDEA
+-Build-Jdk: 1.8.0_131
+-Main-Class: ${start-class}
+-
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/application.properties b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/application.properties
+deleted file mode 100644
+index b7c10e5..0000000
+--- a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/application.properties
++++ /dev/null
+@@ -1,16 +0,0 @@
+-spring:
+-jpa:
+-hibernate:
+-ddl-auto: create
+-show-sql: true
+-datasource:
+-driver-class-name: com.mysql.jdbc.Driver
+-url: jdbc:mysql://127.0.0.1:3306/JourneyPlanning
+-username: root
+-password: 123456
+-
+-spring.rabbitmq.host=182.254.138.108
+-spring.rabbitmq.port=15672
+-spring.rabbitmq.username=woshinibaba
+-spring.rabbitmq.password=nishiwoerzi
+-spring.rabbitmq.virtual-host=/
+\ No newline at end of file
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/application.yml b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/application.yml
+deleted file mode 100644
+index a99514c..0000000
+--- a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/application.yml
++++ /dev/null
+@@ -1,5 +0,0 @@
+-rabbitmq:
+-    host: 182.254.138.108
+-    port: 15672
+-    username: woshinibaba
+-    password: nishiwoerzi
+\ No newline at end of file
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/JourneyplanningApplication.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/JourneyplanningApplication.class
+deleted file mode 100644
+index 02132e4..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/JourneyplanningApplication.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/AlgorithmController.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/AlgorithmController.class
+deleted file mode 100644
+index 5139146..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/AlgorithmController.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/CostController.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/CostController.class
+deleted file mode 100644
+index bee81b1..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/CostController.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/FlightController.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/FlightController.class
+deleted file mode 100644
+index 67cf251..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/FlightController.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/HotelController.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/HotelController.class
+deleted file mode 100644
+index 0c3c294..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/HotelController.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/RabbitMqController.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/RabbitMqController.class
+deleted file mode 100644
+index 3ffc901..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/controller/RabbitMqController.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Flight.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Flight.class
+deleted file mode 100644
+index 777f6b3..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Flight.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/FlightOption.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/FlightOption.class
+deleted file mode 100644
+index 19334d3..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/FlightOption.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Hotel.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Hotel.class
+deleted file mode 100644
+index d210a5a..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Hotel.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/HotelOption.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/HotelOption.class
+deleted file mode 100644
+index 3fea180..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/HotelOption.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Result.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Result.class
+deleted file mode 100644
+index f53a5f4..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/entity/Result.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/service/Algorithm.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/service/Algorithm.class
+deleted file mode 100644
+index eba36e6..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/service/Algorithm.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/service/Count.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/service/Count.class
+deleted file mode 100644
+index 62dfd3a..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/service/Count.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Customer.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Customer.class
+deleted file mode 100644
+index 7cc89ac..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Customer.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Producer.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Producer.class
+deleted file mode 100644
+index 9805e32..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Producer.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Search.class b/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Search.class
+deleted file mode 100644
+index 247b4a5..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/classes/com/innovation/journeyplanning/util/Search.class and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/Client-1.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/Client-1.0.jar
+deleted file mode 100644
+index 287bc94..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/Client-1.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/amqp-client-4.0.3.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/amqp-client-4.0.3.jar
+deleted file mode 100644
+index 2e9d1b3..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/amqp-client-4.0.3.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/antlr-2.7.7.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/antlr-2.7.7.jar
+deleted file mode 100644
+index 5e5f14b..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/antlr-2.7.7.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/api-1.5.11.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/api-1.5.11.jar
+deleted file mode 100644
+index 1948d19..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/api-1.5.11.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/aspectjweaver-1.8.13.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/aspectjweaver-1.8.13.jar
+deleted file mode 100644
+index 0a69acf..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/aspectjweaver-1.8.13.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/classmate-1.3.4.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/classmate-1.3.4.jar
+deleted file mode 100644
+index 5be6d99..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/classmate-1.3.4.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/client-4.1.3.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/client-4.1.3.jar
+deleted file mode 100644
+index 85c6ce4..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/client-4.1.3.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-beanutils-1.9.3.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-beanutils-1.9.3.jar
+deleted file mode 100644
+index 6728154..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-beanutils-1.9.3.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-codec-1.3.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-codec-1.3.jar
+deleted file mode 100644
+index 957b675..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-codec-1.3.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-collections-3.2.2.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-collections-3.2.2.jar
+deleted file mode 100644
+index fa5df82..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-collections-3.2.2.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-lang-2.5.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-lang-2.5.jar
+deleted file mode 100644
+index ae491da..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-lang-2.5.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-logging-1.1.1.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-logging-1.1.1.jar
+deleted file mode 100644
+index 1deef14..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/commons-logging-1.1.1.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/core-4.1.3.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/core-4.1.3.jar
+deleted file mode 100644
+index 245e436..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/core-4.1.3.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/dom4j-1.6.1.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/dom4j-1.6.1.jar
+deleted file mode 100644
+index c8c4dbb..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/dom4j-1.6.1.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/ezmorph-1.0.6.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/ezmorph-1.0.6.jar
+deleted file mode 100644
+index 30fad12..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/ezmorph-1.0.6.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/fb303-0.9.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/fb303-0.9.0.jar
+deleted file mode 100644
+index abccf34..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/fb303-0.9.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-commons-annotations-5.0.1.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-commons-annotations-5.0.1.Final.jar
+deleted file mode 100644
+index 82e425d..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-commons-annotations-5.0.1.Final.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-core-5.0.12.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-core-5.0.12.Final.jar
+deleted file mode 100644
+index 0da3ff7..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-core-5.0.12.Final.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-entitymanager-5.0.12.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-entitymanager-5.0.12.Final.jar
+deleted file mode 100644
+index c520d19..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-entitymanager-5.0.12.Final.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar
+deleted file mode 100644
+index e2f2c59..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-validator-5.3.6.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-validator-5.3.6.Final.jar
+deleted file mode 100644
+index a58d10c..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hibernate-validator-5.3.6.Final.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hive-cli-1.1.0-cdh5.12.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hive-cli-1.1.0-cdh5.12.0.jar
+deleted file mode 100644
+index bb89a13..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hive-cli-1.1.0-cdh5.12.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hive-jdbc-1.1.0-cdh5.12.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hive-jdbc-1.1.0-cdh5.12.0.jar
+deleted file mode 100644
+index d8d1bdb..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/hive-jdbc-1.1.0-cdh5.12.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/http-client-1.1.1.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/http-client-1.1.1.RELEASE.jar
+deleted file mode 100644
+index f60db15..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/http-client-1.1.1.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/httpclient-4.5.5.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/httpclient-4.5.5.jar
+deleted file mode 100644
+index 7796b0e..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/httpclient-4.5.5.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/httpcore-4.4.9.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/httpcore-4.4.9.jar
+deleted file mode 100644
+index cddba28..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/httpcore-4.4.9.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-annotations-2.8.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-annotations-2.8.0.jar
+deleted file mode 100644
+index d19b67b..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-annotations-2.8.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-core-2.8.10.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-core-2.8.10.jar
+deleted file mode 100644
+index 700b3c1..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-core-2.8.10.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-databind-2.8.10.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-databind-2.8.10.jar
+deleted file mode 100644
+index a3bd94d..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jackson-databind-2.8.10.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jandex-2.0.0.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jandex-2.0.0.Final.jar
+deleted file mode 100644
+index d24086a..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jandex-2.0.0.Final.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/javassist-3.21.0-GA.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/javassist-3.21.0-GA.jar
+deleted file mode 100644
+index 64549c4..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/javassist-3.21.0-GA.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/javax.transaction-api-1.2.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/javax.transaction-api-1.2.jar
+deleted file mode 100644
+index e87adb8..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/javax.transaction-api-1.2.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jboss-logging-3.3.1.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jboss-logging-3.3.1.Final.jar
+deleted file mode 100644
+index cb66fde..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jboss-logging-3.3.1.Final.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jcl-over-slf4j-1.7.25.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jcl-over-slf4j-1.7.25.jar
+deleted file mode 100644
+index 8e7fec8..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jcl-over-slf4j-1.7.25.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jdbc-4.1.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jdbc-4.1.jar
+deleted file mode 100644
+index 64489a8..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jdbc-4.1.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/json-lib-2.4-jdk15.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/json-lib-2.4-jdk15.jar
+deleted file mode 100644
+index 68d4f3b..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/json-lib-2.4-jdk15.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jul-to-slf4j-1.7.25.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jul-to-slf4j-1.7.25.jar
+deleted file mode 100644
+index 98d9668..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/jul-to-slf4j-1.7.25.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j-1.2.14.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j-1.2.14.jar
+deleted file mode 100644
+index 6251307..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j-1.2.14.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j-over-slf4j-1.7.25.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j-over-slf4j-1.7.25.jar
+deleted file mode 100644
+index ba241a4..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j-over-slf4j-1.7.25.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j12-1.5.11.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j12-1.5.11.jar
+deleted file mode 100644
+index c30ef0e..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/log4j12-1.5.11.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/logback-classic-1.1.11.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/logback-classic-1.1.11.jar
+deleted file mode 100644
+index 22a4f43..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/logback-classic-1.1.11.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/logback-core-1.1.11.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/logback-core-1.1.11.jar
+deleted file mode 100644
+index 1dae393..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/logback-core-1.1.11.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/metastore-1.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/metastore-1.0.jar
+deleted file mode 100644
+index 0ebf148..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/metastore-1.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/mysql-connector-java-5.1.45.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/mysql-connector-java-5.1.45.jar
+deleted file mode 100644
+index 5201fcd..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/mysql-connector-java-5.1.45.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/ql-1.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/ql-1.0.jar
+deleted file mode 100644
+index 235afed..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/ql-1.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/service-1.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/service-1.0.jar
+deleted file mode 100644
+index b7c7a27..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/service-1.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/slf4j-api-1.7.25.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/slf4j-api-1.7.25.jar
+deleted file mode 100644
+index 0143c09..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/slf4j-api-1.7.25.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/snakeyaml-1.17.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/snakeyaml-1.17.jar
+deleted file mode 100644
+index b0372a3..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/snakeyaml-1.17.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-amqp-1.7.6.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-amqp-1.7.6.RELEASE.jar
+deleted file mode 100644
+index 08b88f0..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-amqp-1.7.6.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-aop-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-aop-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 7642192..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-aop-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-aspects-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-aspects-4.3.14.RELEASE.jar
+deleted file mode 100644
+index cf76847..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-aspects-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-beans-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-beans-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 2e1a5e1..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-beans-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-1.5.10.RELEASE.jar
+deleted file mode 100644
+index 220a7e5..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-autoconfigure-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-autoconfigure-1.5.10.RELEASE.jar
+deleted file mode 100644
+index 0375c4b..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-autoconfigure-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-1.5.10.RELEASE.jar
+deleted file mode 100644
+index bbaf5ab..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-amqp-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-amqp-1.5.10.RELEASE.jar
+deleted file mode 100644
+index 0195030..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-amqp-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-aop-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-aop-1.5.10.RELEASE.jar
+deleted file mode 100644
+index f031ea7..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-aop-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-data-jpa-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-data-jpa-1.5.10.RELEASE.jar
+deleted file mode 100644
+index 821d5d0..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-data-jpa-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-jdbc-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-jdbc-1.5.10.RELEASE.jar
+deleted file mode 100644
+index 6ba60fe..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-jdbc-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-logging-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-logging-1.5.10.RELEASE.jar
+deleted file mode 100644
+index 0668800..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-logging-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-tomcat-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-tomcat-1.5.10.RELEASE.jar
+deleted file mode 100644
+index 869aeb9..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-tomcat-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-web-1.5.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-web-1.5.10.RELEASE.jar
+deleted file mode 100644
+index c445f36..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-boot-starter-web-1.5.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-context-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-context-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 4537a82..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-context-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-core-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-core-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 75b279c..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-core-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-data-commons-1.13.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-data-commons-1.13.10.RELEASE.jar
+deleted file mode 100644
+index 7757534..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-data-commons-1.13.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-data-jpa-1.11.10.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-data-jpa-1.11.10.RELEASE.jar
+deleted file mode 100644
+index a7b4696..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-data-jpa-1.11.10.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-expression-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-expression-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 866f4c6..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-expression-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-jdbc-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-jdbc-4.3.14.RELEASE.jar
+deleted file mode 100644
+index ba24b59..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-jdbc-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-messaging-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-messaging-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 74b2ac7..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-messaging-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-orm-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-orm-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 4a8d91b..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-orm-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-rabbit-1.7.6.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-rabbit-1.7.6.RELEASE.jar
+deleted file mode 100644
+index aae7dcc..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-rabbit-1.7.6.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-retry-1.2.2.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-retry-1.2.2.RELEASE.jar
+deleted file mode 100644
+index c63655c..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-retry-1.2.2.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-tx-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-tx-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 00134cb..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-tx-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-web-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-web-4.3.14.RELEASE.jar
+deleted file mode 100644
+index 3ccea17..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-web-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-webmvc-4.3.14.RELEASE.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-webmvc-4.3.14.RELEASE.jar
+deleted file mode 100644
+index adbad85..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/spring-webmvc-4.3.14.RELEASE.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/thrift-0.9.0.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/thrift-0.9.0.jar
+deleted file mode 100644
+index 58d1635..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/thrift-0.9.0.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-annotations-api-8.5.27.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-annotations-api-8.5.27.jar
+deleted file mode 100644
+index ef47647..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-annotations-api-8.5.27.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-embed-el-8.5.27.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-embed-el-8.5.27.jar
+deleted file mode 100644
+index 109d5e3..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-embed-el-8.5.27.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-embed-websocket-8.5.27.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-embed-websocket-8.5.27.jar
+deleted file mode 100644
+index 8dc06f9..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-embed-websocket-8.5.27.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-jdbc-8.5.27.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-jdbc-8.5.27.jar
+deleted file mode 100644
+index 448e830..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-jdbc-8.5.27.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-juli-8.5.27.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-juli-8.5.27.jar
+deleted file mode 100644
+index 6e3a8f7..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/tomcat-juli-8.5.27.jar and /dev/null differ
+diff --git a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/validation-api-1.1.0.Final.jar b/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/validation-api-1.1.0.Final.jar
+deleted file mode 100644
+index de85403..0000000
+Binary files a/out/artifacts/journeyplanning_war_exploded/WEB-INF/lib/validation-api-1.1.0.Final.jar and /dev/null differ
+diff --git a/src/META-INF/MANIFEST.MF b/src/META-INF/MANIFEST.MF
+deleted file mode 100644
+index 58630c0..0000000
+--- a/src/META-INF/MANIFEST.MF
++++ /dev/null
+@@ -1,2 +0,0 @@
+-Manifest-Version: 1.0
+-
+diff --git a/src/main/resources/city_list.json b/src/main/resources/city_list.json
+deleted file mode 100755
+index 610c167..0000000
+--- a/src/main/resources/city_list.json
++++ /dev/null
+@@ -1,1365 +0,0 @@
+-{
+-	"热门": [{
+-		"display": "北京",
+-		"code": "BJS",
+-		"index": "1",
+-		"pinyin": "Beijing"
+-	}, {
+-		"display": "上海",
+-		"code": "SHA",
+-		"index": "2",
+-		"pinyin": "Shanghai"
+-	}, {
+-		"display": "广州",
+-		"code": "CAN",
+-		"index": "32",
+-		"pinyin": "Guangzhou"
+-	}, {
+-		"display": "深圳",
+-		"code": "SZX",
+-		"index": "30",
+-		"pinyin": "Shenzhen"
+-	}, {
+-		"display": "成都",
+-		"code": "CTU",
+-		"index": "28",
+-		"pinyin": "Chengdu"
+-	}, {
+-		"display": "杭州",
+-		"code": "HGH",
+-		"index": "17",
+-		"pinyin": "Hangzhou"
+-	}, {
+-		"display": "武汉",
+-		"code": "WUH",
+-		"index": "477",
+-		"pinyin": "Wuhan"
+-	}, {
+-		"display": "西安",
+-		"code": "SIA",
+-		"index": "10",
+-		"pinyin": "Xian"
+-	}, {
+-		"display": "重庆",
+-		"code": "CKG",
+-		"index": "4",
+-		"pinyin": "Chongqing"
+-	}, {
+-		"display": "青岛",
+-		"code": "TAO",
+-		"index": "7",
+-		"pinyin": "Qingdao"
+-	}, {
+-		"display": "长沙",
+-		"code": "CSX",
+-		"index": "206",
+-		"pinyin": "Changsha"
+-	}, {
+-		"display": "南京",
+-		"code": "NKG",
+-		"index": "12",
+-		"pinyin": "Nanjing"
+-	}, {
+-		"display": "厦门",
+-		"code": "XMN",
+-		"index": "25",
+-		"pinyin": "Xiamen"
+-	}, {
+-		"display": "昆明",
+-		"code": "KMG",
+-		"index": "34",
+-		"pinyin": "Kunming"
+-	}, {
+-		"display": "大连",
+-		"code": "DLC",
+-		"index": "6",
+-		"pinyin": "Dalian"
+-	}, {
+-		"display": "天津",
+-		"code": "TSN",
+-		"index": "3",
+-		"pinyin": "Tianjin"
+-	}, {
+-		"display": "郑州",
+-		"code": "CGO",
+-		"index": "559",
+-		"pinyin": "Zhengzhou"
+-	}, {
+-		"display": "三亚",
+-		"code": "SYX",
+-		"index": "43",
+-		"pinyin": "Sanya"
+-	}, {
+-		"display": "济南",
+-		"code": "TNA",
+-		"index": "144",
+-		"pinyin": "Jinan"
+-	}, {
+-		"display": "福州",
+-		"code": "FOC",
+-		"index": "258",
+-		"pinyin": "Fuzhou"
+-	}],
+-	"ABCDEF": {
+-		"A": [{
+-			"display": "阿勒泰",
+-			"code": "AAT",
+-			"index": "175",
+-			"pinyin": "Aletai"
+-		}, {
+-			"display": "阿克苏",
+-			"code": "AKU",
+-			"index": "173",
+-			"pinyin": "Aksu"
+-		}, {
+-			"display": "鞍山",
+-			"code": "AOG",
+-			"index": "178",
+-			"pinyin": "Anshan"
+-		}, {
+-			"display": "安庆",
+-			"code": "AQG",
+-			"index": "177",
+-			"pinyin": "Anqing"
+-		}, {
+-			"display": "安顺",
+-			"code": "AVA",
+-			"index": "179",
+-			"pinyin": "Anshun"
+-		}, {
+-			"display": "阿拉善左旗",
+-			"code": "AXF",
+-			"index": "21269",
+-			"pinyin": "Alashanzuoqi"
+-		}, {
+-			"display": "澳门",
+-			"code": "MFM",
+-			"index": "59",
+-			"pinyin": "Macau"
+-		}, {
+-			"display": "阿里",
+-			"code": "NGQ",
+-			"index": "97",
+-			"pinyin": "Ali"
+-		}, {
+-			"display": "阿拉善右旗",
+-			"code": "RHT",
+-			"index": "21863",
+-			"pinyin": "Alashanyouqi"
+-		}, {
+-			"display": "阿尔山",
+-			"code": "YIE",
+-			"index": "1658",
+-			"pinyin": "Aershan"
+-		}],
+-		"B": [{
+-			"display": "百色",
+-			"code": "AEB",
+-			"index": "1140",
+-			"pinyin": "Baise"
+-		}, {
+-			"display": "包头",
+-			"code": "BAV",
+-			"index": "141",
+-			"pinyin": "Baotou"
+-		}, {
+-			"display": "毕节",
+-			"code": "BFJ",
+-			"index": "22031",
+-			"pinyin": "Bijie"
+-		}, {
+-			"display": "北海",
+-			"code": "BHY",
+-			"index": "189",
+-			"pinyin": "Beihai"
+-		}, {
+-			"display": "北京",
+-			"code": "BJS",
+-			"index": "1",
+-			"pinyin": "Beijing"
+-		}, {
+-			"display": "博乐",
+-			"code": "BPL",
+-			"index": "2548",
+-			"pinyin": "Bole"
+-		}, {
+-			"display": "保山",
+-			"code": "BSD",
+-			"index": "197",
+-			"pinyin": "Baoshan"
+-		}, {
+-			"display": "白城",
+-			"code": "DBC",
+-			"index": "1116",
+-			"pinyin": "Baicheng"
+-		}, {
+-			"display": "布尔津",
+-			"code": "KJI",
+-			"index": "3326",
+-			"pinyin": "Burqin"
+-		}, {
+-			"display": "白山",
+-			"code": "NBS",
+-			"index": "199",
+-			"pinyin": "Baishan"
+-		}, {
+-			"display": "巴彦淖尔",
+-			"code": "RLK",
+-			"index": "3887",
+-			"pinyin": "Bayan Nur"
+-		}],
+-		"C": [{
+-			"display": "昌都",
+-			"code": "BPX",
+-			"index": "575",
+-			"pinyin": "Qamdo"
+-		}, {
+-			"display": "承德",
+-			"code": "CDE",
+-			"index": "562",
+-			"pinyin": "Chengde"
+-		}, {
+-			"display": "常德",
+-			"code": "CGD",
+-			"index": "201",
+-			"pinyin": "Changde"
+-		}, {
+-			"display": "长春",
+-			"code": "CGQ",
+-			"index": "158",
+-			"pinyin": "Changchun"
+-		}, {
+-			"display": "朝阳",
+-			"code": "CHG",
+-			"index": "211",
+-			"pinyin": "Chaoyang"
+-		}, {
+-			"display": "赤峰",
+-			"code": "CIF",
+-			"index": "202",
+-			"pinyin": "Chifeng"
+-		}, {
+-			"display": "长治",
+-			"code": "CIH",
+-			"index": "137",
+-			"pinyin": "Changzhi"
+-		}, {
+-			"display": "重庆",
+-			"code": "CKG",
+-			"index": "4",
+-			"pinyin": "Chongqing"
+-		}, {
+-			"display": "长沙",
+-			"code": "CSX",
+-			"index": "206",
+-			"pinyin": "Changsha"
+-		}, {
+-			"display": "成都",
+-			"code": "CTU",
+-			"index": "28",
+-			"pinyin": "Chengdu"
+-		}, {
+-			"display": "沧源",
+-			"code": "CWJ",
+-			"index": "21741",
+-			"pinyin": "Cangyuan"
+-		}, {
+-			"display": "常州",
+-			"code": "CZX",
+-			"index": "213",
+-			"pinyin": "Changzhou"
+-		}, {
+-			"display": "池州",
+-			"code": "JUH",
+-			"index": "218",
+-			"pinyin": "Chizhou"
+-		}, {
+-			"display": "潮州",
+-			"code": "SWA",
+-			"index": "215",
+-			"pinyin": "Chaozhou"
+-		}, {
+-			"display": "潮汕",
+-			"code": "SWA",
+-			"index": "956",
+-			"pinyin": "Chaoshan"
+-		}],
+-		"D": [{
+-			"display": "大同",
+-			"code": "DAT",
+-			"index": "136",
+-			"pinyin": "Datong"
+-		}, {
+-			"display": "达县",
+-			"code": "DAX",
+-			"index": "234",
+-			"pinyin": "Daxian"
+-		}, {
+-			"display": "达州",
+-			"code": "DAX",
+-			"index": "234",
+-			"pinyin": "Dazhou"
+-		}, {
+-			"display": "稻城",
+-			"code": "DCY",
+-			"index": "1222",
+-			"pinyin": "Daocheng"
+-		}, {
+-			"display": "丹东",
+-			"code": "DDG",
+-			"index": "221",
+-			"pinyin": "Dandong"
+-		}, {
+-			"display": "迪庆",
+-			"code": "DIG",
+-			"index": "93",
+-			"pinyin": "Diqing"
+-		}, {
+-			"display": "大连",
+-			"code": "DLC",
+-			"index": "6",
+-			"pinyin": "Dalian"
+-		}, {
+-			"display": "大理",
+-			"code": "DLU",
+-			"index": "36",
+-			"pinyin": "Dali"
+-		}, {
+-			"display": "敦煌",
+-			"code": "DNH",
+-			"index": "11",
+-			"pinyin": "Dunhuang"
+-		}, {
+-			"display": "东营",
+-			"code": "DOY",
+-			"index": "236",
+-			"pinyin": "Dongying"
+-		}, {
+-			"display": "大庆",
+-			"code": "DQA",
+-			"index": "231",
+-			"pinyin": "Daqing"
+-		}, {
+-			"display": "德令哈",
+-			"code": "HXD",
+-			"index": "2542",
+-			"pinyin": "Delingha"
+-		}, {
+-			"display": "德宏",
+-			"code": "LUM",
+-			"index": "3997",
+-			"pinyin": "Dehong"
+-		}],
+-		"E": [{
+-			"display": "鄂尔多斯",
+-			"code": "DSN",
+-			"index": "3976",
+-			"pinyin": "Ordos"
+-		}, {
+-			"display": "额济纳旗",
+-			"code": "EJN",
+-			"index": "21339",
+-			"pinyin": "Ejinaqi"
+-		}, {
+-			"display": "恩施",
+-			"code": "ENH",
+-			"index": "245",
+-			"pinyin": "Enshi"
+-		}, {
+-			"display": "二连浩特",
+-			"code": "ERL",
+-			"index": "7626",
+-			"pinyin": "Erenhot"
+-		}],
+-		"F": [{
+-			"display": "福州",
+-			"code": "FOC",
+-			"index": "258",
+-			"pinyin": "Fuzhou"
+-		}, {
+-			"display": "阜阳",
+-			"code": "FUG",
+-			"index": "257",
+-			"pinyin": "Fuyang"
+-		}, {
+-			"display": "佛山",
+-			"code": "FUO",
+-			"index": "251",
+-			"pinyin": "Foshan"
+-		}, {
+-			"display": "抚远",
+-			"code": "FYJ",
+-			"index": "21943",
+-			"pinyin": "Fuyuan"
+-		}, {
+-			"display": "富蕴",
+-			"code": "FYN",
+-			"index": "255",
+-			"pinyin": "Fuyun"
+-		}]
+-	},
+-	"GHIJ": {
+-		"G": [{
+-			"display": "广州",
+-			"code": "CAN",
+-			"index": "32",
+-			"pinyin": "Guangzhou"
+-		}, {
+-			"display": "果洛",
+-			"code": "GMQ",
+-			"index": "21862",
+-			"pinyin": "Golog"
+-		}, {
+-			"display": "格尔木",
+-			"code": "GOQ",
+-			"index": "132",
+-			"pinyin": "Golmud"
+-		}, {
+-			"display": "广元",
+-			"code": "GYS",
+-			"index": "267",
+-			"pinyin": "Guangyuan"
+-		}, {
+-			"display": "固原",
+-			"code": "GYU",
+-			"index": "321",
+-			"pinyin": "Guyuan"
+-		}, {
+-			"display": "高雄",
+-			"code": "KHH",
+-			"index": "720",
+-			"pinyin": "Kaohsiung"
+-		}, {
+-			"display": "赣州",
+-			"code": "KOW",
+-			"index": "268",
+-			"pinyin": "Ganzhou"
+-		}, {
+-			"display": "贵阳",
+-			"code": "KWE",
+-			"index": "38",
+-			"pinyin": "Guiyang"
+-		}, {
+-			"display": "桂林",
+-			"code": "KWL",
+-			"index": "33",
+-			"pinyin": "Guilin"
+-		}],
+-		"H": [{
+-			"display": "红原",
+-			"code": "AHJ",
+-			"index": "7835",
+-			"pinyin": "Hongyuan"
+-		}, {
+-			"display": "海口",
+-			"code": "HAK",
+-			"index": "42",
+-			"pinyin": "Haikou"
+-		}, {
+-			"display": "河池",
+-			"code": "HCJ",
+-			"index": "3969",
+-			"pinyin": "Hechi"
+-		}, {
+-			"display": "邯郸",
+-			"code": "HDG",
+-			"index": "275",
+-			"pinyin": "Handan"
+-		}, {
+-			"display": "黑河",
+-			"code": "HEK",
+-			"index": "281",
+-			"pinyin": "Heihe"
+-		}, {
+-			"display": "呼和浩特",
+-			"code": "HET",
+-			"index": "103",
+-			"pinyin": "Hohhot"
+-		}, {
+-			"display": "合肥",
+-			"code": "HFE",
+-			"index": "278",
+-			"pinyin": "Hefei"
+-		}, {
+-			"display": "杭州",
+-			"code": "HGH",
+-			"index": "17",
+-			"pinyin": "Hangzhou"
+-		}, {
+-			"display": "淮安",
+-			"code": "HIA",
+-			"index": "577",
+-			"pinyin": "Huai'an"
+-		}, {
+-			"display": "怀化",
+-			"code": "HJJ",
+-			"index": "282",
+-			"pinyin": "Huaihua"
+-		}, {
+-			"display": "海拉尔",
+-			"code": "HLD",
+-			"index": "142",
+-			"pinyin": "Hailar"
+-		}, {
+-			"display": "哈密",
+-			"code": "HMI",
+-			"index": "285",
+-			"pinyin": "Hami"
+-		}, {
+-			"display": "衡阳",
+-			"code": "HNY",
+-			"index": "297",
+-			"pinyin": "Hengyang"
+-		}, {
+-			"display": "哈尔滨",
+-			"code": "HRB",
+-			"index": "5",
+-			"pinyin": "Harbin"
+-		}, {
+-			"display": "和田",
+-			"code": "HTN",
+-			"index": "294",
+-			"pinyin": "Hotan"
+-		}, {
+-			"display": "花土沟",
+-			"code": "HTT",
+-			"index": "83679",
+-			"pinyin": "HUATUGOU"
+-		}, {
+-			"display": "花莲",
+-			"code": "HUN",
+-			"index": "6954",
+-			"pinyin": "Hualien"
+-		}, {
+-			"display": "霍林郭勒",
+-			"code": "HUO",
+-			"index": "21091",
+-			"pinyin": "huolinguole"
+-		}, {
+-			"display": "惠州",
+-			"code": "HUZ",
+-			"index": "299",
+-			"pinyin": "Huizhou"
+-		}, {
+-			"display": "汉中",
+-			"code": "HZG",
+-			"index": "129",
+-			"pinyin": "Hanzhong"
+-		}, {
+-			"display": "黄山",
+-			"code": "TXN",
+-			"index": "23",
+-			"pinyin": "Huangshan"
+-		}],
+-		"J": [{
+-			"display": "嘉义",
+-			"code": "CYI",
+-			"index": "5152",
+-			"pinyin": "Chiayi"
+-		}, {
+-			"display": "景德镇",
+-			"code": "JDZ",
+-			"index": "305",
+-			"pinyin": "Jingdezhen"
+-		}, {
+-			"display": "加格达奇",
+-			"code": "JGD",
+-			"index": "1143",
+-			"pinyin": "Jiagedaqi"
+-		}, {
+-			"display": "嘉峪关",
+-			"code": "JGN",
+-			"index": "326",
+-			"pinyin": "Jiayuguan"
+-		}, {
+-			"display": "井冈山",
+-			"code": "JGS",
+-			"index": "307",
+-			"pinyin": "Jinggangshan"
+-		}, {
+-			"display": "景洪",
+-			"code": "JHG",
+-			"index": "35",
+-			"pinyin": "Jinghong"
+-		}, {
+-			"display": "金昌",
+-			"code": "JIC",
+-			"index": "1158",
+-			"pinyin": "Jinchang"
+-		}, {
+-			"display": "九江",
+-			"code": "JIU",
+-			"index": "24",
+-			"pinyin": "Jiujiang"
+-		}, {
+-			"display": "晋江",
+-			"code": "JJN",
+-			"index": "406",
+-			"pinyin": "Jinjiang"
+-		}, {
+-			"display": "佳木斯",
+-			"code": "JMU",
+-			"index": "317",
+-			"pinyin": "Jiamusi"
+-		}, {
+-			"display": "济宁",
+-			"code": "JNG",
+-			"index": "318",
+-			"pinyin": "Jining"
+-		}, {
+-			"display": "锦州",
+-			"code": "JNZ",
+-			"index": "327",
+-			"pinyin": "Jinzhou"
+-		}, {
+-			"display": "建三江",
+-			"code": "JSJ",
+-			"index": "1623",
+-			"pinyin": "Jiansanjiang"
+-		}, {
+-			"display": "鸡西",
+-			"code": "JXA",
+-			"index": "157",
+-			"pinyin": "Jixi"
+-		}, {
+-			"display": "九寨沟",
+-			"code": "JZH",
+-			"index": "91",
+-			"pinyin": "Jiuzhaigou"
+-		}, {
+-			"display": "金门",
+-			"code": "KNH",
+-			"index": "7203",
+-			"pinyin": "Kinmen"
+-		}, {
+-			"display": "揭阳",
+-			"code": "SWA",
+-			"index": "956",
+-			"pinyin": "Jieyang"
+-		}, {
+-			"display": "济南",
+-			"code": "TNA",
+-			"index": "144",
+-			"pinyin": "Jinan"
+-		}]
+-	},
+-	"KLMN": {
+-		"K": [{
+-			"display": "库车",
+-			"code": "KCA",
+-			"index": "329",
+-			"pinyin": "Kuqa"
+-		}, {
+-			"display": "康定",
+-			"code": "KGT",
+-			"index": "4130",
+-			"pinyin": "Kangding"
+-		}, {
+-			"display": "喀什",
+-			"code": "KHG",
+-			"index": "109",
+-			"pinyin": "Kashgar"
+-		}, {
+-			"display": "凯里",
+-			"code": "KJH",
+-			"index": "333",
+-			"pinyin": "Kaili"
+-		}, {
+-			"display": "昆明",
+-			"code": "KMG",
+-			"index": "34",
+-			"pinyin": "Kunming"
+-		}, {
+-			"display": "库尔勒",
+-			"code": "KRL",
+-			"index": "330",
+-			"pinyin": "Korla"
+-		}, {
+-			"display": "克拉玛依",
+-			"code": "KRY",
+-			"index": "166",
+-			"pinyin": "Karamay"
+-		}],
+-		"L": [{
+-			"display": "黎平",
+-			"code": "HZH",
+-			"index": "3852",
+-			"pinyin": "Liping"
+-		}, {
+-			"display": "澜沧",
+-			"code": "JMJ",
+-			"index": "21596",
+-			"pinyin": "Lancang"
+-		}, {
+-			"display": "龙岩",
+-			"code": "LCX",
+-			"index": "348",
+-			"pinyin": "Longyan"
+-		}, {
+-			"display": "临汾",
+-			"code": "LFQ",
+-			"index": "139",
+-			"pinyin": "Linfen"
+-		}, {
+-			"display": "兰州",
+-			"code": "LHW",
+-			"index": "100",
+-			"pinyin": "Lanzhou"
+-		}, {
+-			"display": "丽江",
+-			"code": "LJG",
+-			"index": "37",
+-			"pinyin": "Lijiang"
+-		}, {
+-			"display": "荔波",
+-			"code": "LLB",
+-			"index": "1708",
+-			"pinyin": "Libo"
+-		}, {
+-			"display": "吕梁",
+-			"code": "LLV",
+-			"index": "7631",
+-			"pinyin": "Lvliang"
+-		}, {
+-			"display": "临沧",
+-			"code": "LNJ",
+-			"index": "1236",
+-			"pinyin": "Lincang"
+-		}, {
+-			"display": "六盘水",
+-			"code": "LPF",
+-			"index": "605",
+-			"pinyin": "Liupanshui"
+-		}, {
+-			"display": "拉萨",
+-			"code": "LXA",
+-			"index": "41",
+-			"pinyin": "Lhasa"
+-		}, {
+-			"display": "洛阳",
+-			"code": "LYA",
+-			"index": "350",
+-			"pinyin": "Luoyang"
+-		}, {
+-			"display": "连云港",
+-			"code": "LYG",
+-			"index": "353",
+-			"pinyin": "Lianyungang"
+-		}, {
+-			"display": "临沂",
+-			"code": "LYI",
+-			"index": "569",
+-			"pinyin": "Linyi"
+-		}, {
+-			"display": "柳州",
+-			"code": "LZH",
+-			"index": "354",
+-			"pinyin": "Liuzhou"
+-		}, {
+-			"display": "泸州",
+-			"code": "LZO",
+-			"index": "355",
+-			"pinyin": "Luzhou"
+-		}, {
+-			"display": "林芝",
+-			"code": "LZY",
+-			"index": "108",
+-			"pinyin": "Nyingtri"
+-		}],
+-		"M": [{
+-			"display": "芒市",
+-			"code": "LUM",
+-			"index": "3997",
+-			"pinyin": "Mangshi"
+-		}, {
+-			"display": "牡丹江",
+-			"code": "MDG",
+-			"index": "150",
+-			"pinyin": "Mudanjiang"
+-		}, {
+-			"display": "马祖",
+-			"code": "MFK",
+-			"index": "7808",
+-			"pinyin": "MATSU"
+-		}, {
+-			"display": "绵阳",
+-			"code": "MIG",
+-			"index": "370",
+-			"pinyin": "Mianyang"
+-		}, {
+-			"display": "梅州",
+-			"code": "MXZ",
+-			"index": "3053",
+-			"pinyin": "Meizhou"
+-		}, {
+-			"display": "马公",
+-			"code": "MZG",
+-			"index": "5383",
+-			"pinyin": "Magong"
+-		}, {
+-			"display": "满洲里",
+-			"code": "NZH",
+-			"index": "1083",
+-			"pinyin": "Manzhouli"
+-		}, {
+-			"display": "漠河",
+-			"code": "OHE",
+-			"index": "155",
+-			"pinyin": "Mohe"
+-		}],
+-		"N": [{
+-			"display": "南昌",
+-			"code": "KHN",
+-			"index": "376",
+-			"pinyin": "Nanchang"
+-		}, {
+-			"display": "南竿",
+-			"code": "LZN",
+-			"index": "91804",
+-			"pinyin": "Nangan"
+-		}, {
+-			"display": "南充",
+-			"code": "NAO",
+-			"index": "377",
+-			"pinyin": "Nanchong"
+-		}, {
+-			"display": "宁波",
+-			"code": "NGB",
+-			"index": "375",
+-			"pinyin": "Ningbo"
+-		}, {
+-			"display": "南京",
+-			"code": "NKG",
+-			"index": "12",
+-			"pinyin": "Nanjing"
+-		}, {
+-			"display": "宁蒗",
+-			"code": "NLH",
+-			"index": "1161",
+-			"pinyin": "Ninglang"
+-		}, {
+-			"display": "南宁",
+-			"code": "NNG",
+-			"index": "380",
+-			"pinyin": "Nanning"
+-		}, {
+-			"display": "南阳",
+-			"code": "NNY",
+-			"index": "385",
+-			"pinyin": "Nanyang"
+-		}, {
+-			"display": "南通",
+-			"code": "NTG",
+-			"index": "82",
+-			"pinyin": "Nantong"
+-		}]
+-	},
+-	"PQRSTUVW": {
+-		"P": [{
+-			"display": "澎湖列岛",
+-			"code": "MZG",
+-			"index": "5383",
+-			"pinyin": "Penghu Islands"
+-		}, {
+-			"display": "攀枝花",
+-			"code": "PZI",
+-			"index": "1097",
+-			"pinyin": "Panzhihua"
+-		}, {
+-			"display": "普洱",
+-			"code": "SYM",
+-			"index": "3996",
+-			"pinyin": "Pu'er"
+-		}],
+-		"Q": [{
+-			"display": "琼海",
+-			"code": "BAR",
+-			"index": "52",
+-			"pinyin": "Qionghai"
+-		}, {
+-			"display": "秦皇岛",
+-			"code": "BPE",
+-			"index": "147",
+-			"pinyin": "Qinhuangdao"
+-		}, {
+-			"display": "且末",
+-			"code": "IQM",
+-			"index": "399",
+-			"pinyin": "Qiemo"
+-		}, {
+-			"display": "庆阳",
+-			"code": "IQN",
+-			"index": "404",
+-			"pinyin": "Qingyang"
+-		}, {
+-			"display": "黔江",
+-			"code": "JIQ",
+-			"index": "7708",
+-			"pinyin": "Qianjiang"
+-		}, {
+-			"display": "泉州",
+-			"code": "JJN",
+-			"index": "406",
+-			"pinyin": "Quanzhou"
+-		}, {
+-			"display": "衢州",
+-			"code": "JUZ",
+-			"index": "407",
+-			"pinyin": "Quzhou"
+-		}, {
+-			"display": "齐齐哈尔",
+-			"code": "NDG",
+-			"index": "149",
+-			"pinyin": "Qiqihar"
+-		}, {
+-			"display": "青岛",
+-			"code": "TAO",
+-			"index": "7",
+-			"pinyin": "Qingdao"
+-		}],
+-		"R": [{
+-			"display": "日照",
+-			"code": "RIZ",
+-			"index": "1106",
+-			"pinyin": "Rizhao"
+-		}, {
+-			"display": "日喀则",
+-			"code": "RKZ",
+-			"index": "92",
+-			"pinyin": "Rikaze"
+-		}],
+-		"S": [{
+-			"display": "神农架",
+-			"code": "HPG",
+-			"index": "657",
+-			"pinyin": "Shennongjia"
+-		}, {
+-			"display": "莎车",
+-			"code": "QSZ",
+-			"index": "21827",
+-			"pinyin": "Shache"
+-		}, {
+-			"display": "上海",
+-			"code": "SHA",
+-			"index": "2",
+-			"pinyin": "Shanghai"
+-		}, {
+-			"display": "沈阳",
+-			"code": "SHE",
+-			"index": "451",
+-			"pinyin": "Shenyang"
+-		}, {
+-			"display": "石河子",
+-			"code": "SHF",
+-			"index": "426",
+-			"pinyin": "Shihezi"
+-		}, {
+-			"display": "石家庄",
+-			"code": "SJW",
+-			"index": "428",
+-			"pinyin": "Shijiazhuang"
+-		}, {
+-			"display": "上饶",
+-			"code": "SQD",
+-			"index": "411",
+-			"pinyin": "Shangrao"
+-		}, {
+-			"display": "三明",
+-			"code": "SQJ",
+-			"index": "437",
+-			"pinyin": "Sanming"
+-		}, {
+-			"display": "汕头",
+-			"code": "SWA",
+-			"index": "447",
+-			"pinyin": "Shantou"
+-		}, {
+-			"display": "三亚",
+-			"code": "SYX",
+-			"index": "43",
+-			"pinyin": "Sanya"
+-		}, {
+-			"display": "深圳",
+-			"code": "SZX",
+-			"index": "30",
+-			"pinyin": "Shenzhen"
+-		}, {
+-			"display": "十堰",
+-			"code": "WDS",
+-			"index": "452",
+-			"pinyin": "SHIYAN"
+-		}, {
+-			"display": "邵阳",
+-			"code": "WGN",
+-			"index": "1111",
+-			"pinyin": "Shaoyang"
+-		}, {
+-			"display": "松原",
+-			"code": "YSQ",
+-			"index": "1303",
+-			"pinyin": "Songyuan"
+-		}],
+-		"T": [{
+-			"display": "台州",
+-			"code": "HYN",
+-			"index": "578",
+-			"pinyin": "Taizhou"
+-		}, {
+-			"display": "台中",
+-			"code": "RMQ",
+-			"index": "3849",
+-			"pinyin": "Taichung"
+-		}, {
+-			"display": "塔城",
+-			"code": "TCG",
+-			"index": "455",
+-			"pinyin": "Tacheng"
+-		}, {
+-			"display": "腾冲",
+-			"code": "TCZ",
+-			"index": "1819",
+-			"pinyin": "Tengchong"
+-		}, {
+-			"display": "铜仁",
+-			"code": "TEN",
+-			"index": "1227",
+-			"pinyin": "Tongren"
+-		}, {
+-			"display": "通辽",
+-			"code": "TGO",
+-			"index": "458",
+-			"pinyin": "Tongliao"
+-		}, {
+-			"display": "天水",
+-			"code": "THQ",
+-			"index": "464",
+-			"pinyin": "Tianshui"
+-		}, {
+-			"display": "吐鲁番",
+-			"code": "TLQ",
+-			"index": "21811",
+-			"pinyin": "Tulufan"
+-		}, {
+-			"display": "通化",
+-			"code": "TNH",
+-			"index": "456",
+-			"pinyin": "Tonghua"
+-		}, {
+-			"display": "台南",
+-			"code": "TNN",
+-			"index": "3847",
+-			"pinyin": "Tainan"
+-		}, {
+-			"display": "台北",
+-			"code": "TPE",
+-			"index": "617",
+-			"pinyin": "Taipei"
+-		}, {
+-			"display": "天津",
+-			"code": "TSN",
+-			"index": "3",
+-			"pinyin": "Tianjin"
+-		}, {
+-			"display": "台东",
+-			"code": "TTT",
+-			"index": "3848",
+-			"pinyin": "Taitung"
+-		}, {
+-			"display": "唐山",
+-			"code": "TVS",
+-			"index": "468",
+-			"pinyin": "Tangshan"
+-		}, {
+-			"display": "太原",
+-			"code": "TYN",
+-			"index": "105",
+-			"pinyin": "Taiyuan"
+-		}, {
+-			"display": "泰州",
+-			"code": "YTY",
+-			"index": "15",
+-			"pinyin": "Taizhou"
+-		}],
+-		"W": [{
+-			"display": "乌兰浩特",
+-			"code": "HLH",
+-			"index": "484",
+-			"pinyin": "Ulan Hot"
+-		}, {
+-			"display": "乌兰察布",
+-			"code": "UCB",
+-			"index": "7518",
+-			"pinyin": "ULANQAB"
+-		}, {
+-			"display": "乌鲁木齐",
+-			"code": "URC",
+-			"index": "39",
+-			"pinyin": "Urumqi"
+-		}, {
+-			"display": "潍坊",
+-			"code": "WEF",
+-			"index": "475",
+-			"pinyin": "Weifang"
+-		}, {
+-			"display": "威海",
+-			"code": "WEH",
+-			"index": "479",
+-			"pinyin": "Weihai"
+-		}, {
+-			"display": "文山",
+-			"code": "WNH",
+-			"index": "1342",
+-			"pinyin": "Wenshan"
+-		}, {
+-			"display": "温州",
+-			"code": "WNZ",
+-			"index": "491",
+-			"pinyin": "Wenzhou"
+-		}, {
+-			"display": "乌海",
+-			"code": "WUA",
+-			"index": "1133",
+-			"pinyin": "Wuhai"
+-		}, {
+-			"display": "武汉",
+-			"code": "WUH",
+-			"index": "477",
+-			"pinyin": "Wuhan"
+-		}, {
+-			"display": "武夷山",
+-			"code": "WUS",
+-			"index": "26",
+-			"pinyin": "Wuyishan"
+-		}, {
+-			"display": "无锡",
+-			"code": "WUX",
+-			"index": "13",
+-			"pinyin": "Wuxi"
+-		}, {
+-			"display": "梧州",
+-			"code": "WUZ",
+-			"index": "492",
+-			"pinyin": "Wuzhou"
+-		}, {
+-			"display": "万州",
+-			"code": "WXN",
+-			"index": "487",
+-			"pinyin": "Wanzhou"
+-		}]
+-	},
+-	"XYZ": {
+-		"X": [{
+-			"display": "兴义",
+-			"code": "ACX",
+-			"index": "1139",
+-			"pinyin": "Xingyi"
+-		}, {
+-			"display": "夏河",
+-			"code": "GXH",
+-			"index": "497",
+-			"pinyin": "Xiahe"
+-		}, {
+-			"display": "香港",
+-			"code": "HKG",
+-			"index": "58",
+-			"pinyin": "Hong Kong"
+-		}, {
+-			"display": "西双版纳",
+-			"code": "JHG",
+-			"index": "35",
+-			"pinyin": "Xishuangbanna"
+-		}, {
+-			"display": "新源",
+-			"code": "NLT",
+-			"index": "3360",
+-			"pinyin": "Xinyuan"
+-		}, {
+-			"display": "西安",
+-			"code": "SIA",
+-			"index": "10",
+-			"pinyin": "Xi'an"
+-		}, {
+-			"display": "忻州",
+-			"code": "WUT",
+-			"index": "513",
+-			"pinyin": "Xinzhou"
+-		}, {
+-			"display": "襄阳",
+-			"code": "XFN",
+-			"index": "496",
+-			"pinyin": "Xiangyang"
+-		}, {
+-			"display": "西昌",
+-			"code": "XIC",
+-			"index": "494",
+-			"pinyin": "Xichang"
+-		}, {
+-			"display": "锡林浩特",
+-			"code": "XIL",
+-			"index": "500",
+-			"pinyin": "Xilinhot"
+-		}, {
+-			"display": "厦门",
+-			"code": "XMN",
+-			"index": "25",
+-			"pinyin": "Xiamen"
+-		}, {
+-			"display": "西宁",
+-			"code": "XNN",
+-			"index": "124",
+-			"pinyin": "Xining"
+-		}, {
+-			"display": "徐州",
+-			"code": "XUZ",
+-			"index": "512",
+-			"pinyin": "Xuzhou"
+-		}],
+-		"Y": [{
+-			"display": "延安",
+-			"code": "ENY",
+-			"index": "110",
+-			"pinyin": "Yan'an"
+-		}, {
+-			"display": "银川",
+-			"code": "INC",
+-			"index": "99",
+-			"pinyin": "Yinchuan"
+-		}, {
+-			"display": "伊春",
+-			"code": "LDS",
+-			"index": "517",
+-			"pinyin": "Yichun"
+-		}, {
+-			"display": "永州",
+-			"code": "LLF",
+-			"index": "970",
+-			"pinyin": "Yongzhou"
+-		}, {
+-			"display": "榆林",
+-			"code": "UYN",
+-			"index": "527",
+-			"pinyin": "Yulin"
+-		}, {
+-			"display": "宜宾",
+-			"code": "YBP",
+-			"index": "514",
+-			"pinyin": "Yibin"
+-		}, {
+-			"display": "运城",
+-			"code": "YCU",
+-			"index": "140",
+-			"pinyin": "Yuncheng"
+-		}, {
+-			"display": "宜春",
+-			"code": "YIC",
+-			"index": "518",
+-			"pinyin": "Yichun"
+-		}, {
+-			"display": "宜昌",
+-			"code": "YIH",
+-			"index": "515",
+-			"pinyin": "Yichang"
+-		}, {
+-			"display": "伊宁",
+-			"code": "YIN",
+-			"index": "529",
+-			"pinyin": "Yining"
+-		}, {
+-			"display": "义乌",
+-			"code": "YIW",
+-			"index": "536",
+-			"pinyin": "Yiwu"
+-		}, {
+-			"display": "营口",
+-			"code": "YKH",
+-			"index": "1300",
+-			"pinyin": "Yingkou"
+-		}, {
+-			"display": "延吉",
+-			"code": "YNJ",
+-			"index": "523",
+-			"pinyin": "Yanji"
+-		}, {
+-			"display": "烟台",
+-			"code": "YNT",
+-			"index": "533",
+-			"pinyin": "Yantai"
+-		}, {
+-			"display": "盐城",
+-			"code": "YNZ",
+-			"index": "1200",
+-			"pinyin": "Yancheng"
+-		}, {
+-			"display": "扬州",
+-			"code": "YTY",
+-			"index": "15",
+-			"pinyin": "Yangzhou"
+-		}, {
+-			"display": "玉树",
+-			"code": "YUS",
+-			"index": "7582",
+-			"pinyin": "Yushu"
+-		}],
+-		"Z": [{
+-			"display": "郑州",
+-			"code": "CGO",
+-			"index": "559",
+-			"pinyin": "Zhengzhou"
+-		}, {
+-			"display": "张家界",
+-			"code": "DYG",
+-			"index": "27",
+-			"pinyin": "Zhangjiajie"
+-		}, {
+-			"display": "舟山",
+-			"code": "HSN",
+-			"index": "19",
+-			"pinyin": "Zhoushan"
+-		}, {
+-			"display": "扎兰屯",
+-			"code": "NZL",
+-			"index": "1135",
+-			"pinyin": "Zhalantun"
+-		}, {
+-			"display": "遵义茅台",
+-			"code": "WMT",
+-			"index": "669329",
+-			"pinyin": "ZunyiMaotai"
+-		}, {
+-			"display": "张掖",
+-			"code": "YZY",
+-			"index": "663",
+-			"pinyin": "ZHANGYE"
+-		}, {
+-			"display": "昭通",
+-			"code": "ZAT",
+-			"index": "555",
+-			"pinyin": "ZHAOTONG"
+-		}, {
+-			"display": "湛江",
+-			"code": "ZHA",
+-			"index": "547",
+-			"pinyin": "ZHANJIANG"
+-		}, {
+-			"display": "中卫",
+-			"code": "ZHY",
+-			"index": "556",
+-			"pinyin": "ZHONGWEI"
+-		}, {
+-			"display": "张家口",
+-			"code": "ZQZ",
+-			"index": "550",
+-			"pinyin": "Zhangjiakou"
+-		}, {
+-			"display": "珠海",
+-			"code": "ZUH",
+-			"index": "31",
+-			"pinyin": "Zhuhai"
+-		}, {
+-			"display": "遵义新舟",
+-			"code": "ZYI",
+-			"index": "558",
+-			"pinyin": "ZunyiXinzhou"
+-		}]
+-	}
+-}
+\ No newline at end of file

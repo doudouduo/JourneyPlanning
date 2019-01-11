@@ -264,9 +264,9 @@ public class Algorithm {
 //									System.out.println("第" + Integer.toString(j + time[k]) + "天状态" + Integer.toString(m) + "由第" + Integer.toString(j) + "天状态" + Integer.toString(i) + "和第" + Integer.toString(j + time[k]) + "天状态" + Integer.toString(k) + "组成\n");
 								} else if (Math.abs(f[j + time[k]][m] - f[j][i] + f[j + time[k]][k] + cost[j][path[j][i].get(l1).get(path[j][i].get(l1).size() - 1)][path[j + time[k]][k].get(l2).get(0)]) <= 0) {
 									ArrayList<Integer> p = new ArrayList<Integer>();
-									for (int m1 = 0; m < path[j][i].get(l1).size(); ++m1)
+									for (int m1 = 0; m1 < path[j][i].get(l1).size(); ++m1)
 										p.add(path[j][i].get(l1).get(m1));
-									for (int m2 = 0; m < path[j + time[k]][k].get(l2).size(); ++m2)
+									for (int m2 = 0; m2 < path[j + time[k]][k].get(l2).size(); ++m2)
 										p.add(path[j][i].get(l1).get(m2));
 									boolean flag = true;
 									for (int l3 = 0; l3 < path[j + time[k]][m].size(); ++l3) {

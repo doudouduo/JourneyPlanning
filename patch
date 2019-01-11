@@ -1,0 +1,979 @@
+diff --git a/journeyplanning.iml b/journeyplanning.iml
+index 31bbda0..7ae09f5 100644
+--- a/journeyplanning.iml
++++ b/journeyplanning.iml
+@@ -108,8 +108,6 @@
+     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
+     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />
+     <orderEntry type="library" name="Maven: net.sf.ezmorph:ezmorph:1.0.6" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.hive:hive-jdbc:1.1.0-cdh5.12.0" level="project" />
+-    <orderEntry type="library" name="Maven: org.apache.hive:hive-cli:1.1.0-cdh5.12.0" level="project" />
+     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.3" level="project" />
+     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+     <orderEntry type="library" name="Maven: hive:metastore:1.0" level="project" />
+@@ -124,5 +122,6 @@
+     <orderEntry type="library" name="Maven: slf4j:api:1.5.11" level="project" />
+     <orderEntry type="library" name="Maven: slf4j:log4j12:1.5.11" level="project" />
+     <orderEntry type="library" name="Maven: TCLIService:Client:1.0" level="project" />
++    <orderEntry type="library" name="Maven: commons-io:commons-io:1.3.2" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+diff --git a/pom.xml b/pom.xml
+index d9e7aed..aa60d8c 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -58,27 +58,27 @@
+ 			<classifier>jdk15</classifier>
+ 		</dependency>
+ 
+-		<dependency>
+-			<groupId>org.apache.hive</groupId>
+-			<artifactId>hive-jdbc</artifactId>
+-			<version>1.1.0-cdh5.12.0</version>
+-			<exclusions>
+-				<exclusion>
+-					<groupId>org.eclipse.jetty.aggregate</groupId>
+-					<artifactId>jetty-all</artifactId>
+-				</exclusion>
+-				<exclusion>
+-					<groupId>org.apache.hive</groupId>
+-					<artifactId>hive-shims</artifactId>
+-				</exclusion>
+-			</exclusions>
+-		</dependency>
+-
+-		<dependency>
+-			<groupId>org.apache.hive</groupId>
+-			<artifactId>hive-cli</artifactId>
+-			<version>1.1.0-cdh5.12.0</version>
+-		</dependency>
++		<!--<dependency>-->
++			<!--<groupId>org.apache.hive</groupId>-->
++			<!--<artifactId>hive-jdbc</artifactId>-->
++			<!--<version>1.1.0-cdh5.12.0</version>-->
++			<!--<exclusions>-->
++				<!--<exclusion>-->
++					<!--<groupId>org.eclipse.jetty.aggregate</groupId>-->
++					<!--<artifactId>jetty-all</artifactId>-->
++				<!--</exclusion>-->
++				<!--<exclusion>-->
++					<!--<groupId>org.apache.hive</groupId>-->
++					<!--<artifactId>hive-shims</artifactId>-->
++				<!--</exclusion>-->
++			<!--</exclusions>-->
++		<!--</dependency>-->
++
++		<!--<dependency>-->
++			<!--<groupId>org.apache.hive</groupId>-->
++			<!--<artifactId>hive-cli</artifactId>-->
++			<!--<version>1.1.0-cdh5.12.0</version>-->
++		<!--</dependency>-->
+ 
+ 		<dependency>
+ 			<groupId>commons-codec</groupId>
+@@ -164,6 +164,14 @@
+ 			<version>1.0</version>
+ 		</dependency>
+ 
++		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
++		<dependency>
++			<groupId>org.apache.commons</groupId>
++			<artifactId>commons-io</artifactId>
++			<version>1.3.2</version>
++		</dependency>
++
++
+ 	</dependencies>
+ 
+ 	<build>
+@@ -173,6 +181,7 @@
+ 				<artifactId>spring-boot-maven-plugin</artifactId>
+ 			</plugin>
+ 		</plugins>
++		<defaultGoal>compile</defaultGoal>
+ 	</build>
+ 
+ 
+diff --git a/src/main/java/com/innovation/journeyplanning/controller/AlgorithmController.java b/src/main/java/com/innovation/journeyplanning/controller/AlgorithmController.java
+index 1ee928a..718a7c3 100644
+--- a/src/main/java/com/innovation/journeyplanning/controller/AlgorithmController.java
++++ b/src/main/java/com/innovation/journeyplanning/controller/AlgorithmController.java
+@@ -1,6 +1,5 @@
+ package com.innovation.journeyplanning.controller;
+ 
+-import com.fasterxml.jackson.databind.util.JSONPObject;
+ import com.innovation.journeyplanning.entity.FlightOption;
+ import com.innovation.journeyplanning.entity.HotelOption;
+ import com.innovation.journeyplanning.service.Algorithm;
+@@ -15,12 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
+ 
+ import javax.servlet.http.HttpServletRequest;
+ import java.io.IOException;
++import java.nio.charset.Charset;
+ import java.text.DateFormat;
+ import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+-import java.util.ArrayList;
+-import java.util.Date;
+-import java.util.Locale;
++import java.util.*;
+ import java.util.concurrent.TimeoutException;
+ 
+ @RestController
+@@ -57,34 +55,25 @@ public class AlgorithmController {
+         hotelOption.hotel_score="0.0";
+         hotelOption.user_recommend="0.0";
+         hotelOption.user_number="0";
+-//        cost=count.CountCost(start_date,end_date,city,time,flightOption,hotelOption).cost;
+         JSONObject result=algorithm.main(start_date,end_date,city,time,flightOption,hotelOption,1,1);
+-//        for (int i=0;i<day;++i) {
+-//            for (int j = 0; j < city.size(); ++j) {
+-//                for (int k = 0; k < city.size(); ++k) {
+-//                    System.out.print(cost[i][j][k] + " ");
+-//                }
+-//                System.out.println();
+-//            }
+-//            System.out.println();
+-//        }
+     }
+ 
+     @GetMapping(value="/algorithm")
+-    public void plan(String message) throws ParseException,TimeoutException,IOException{
+-        JSONObject request=JSONObject.fromObject(message);
++    public void plan(String message) throws ParseException,TimeoutException,IOException {
++        JSONObject request = JSONObject.fromObject(message);
+         JSONArray jsonArray;
+-        ArrayList<String> city=new ArrayList<>();
+-        ArrayList<Integer>time=new ArrayList<>();
++        ArrayList<String> city = new ArrayList<>();
++        ArrayList<Integer> time = new ArrayList<>();
++
++        FlightOption flightOption = new FlightOption();
++        String dept_city = request.getString("depart_city");
++        String arv_city = request.getString("final_city");
++        int via_city_number = request.getInt("via_city_number");
++        String start_date = request.getString("depart_date");
++        String end_date = request.getString("final_date");
++        int user_id = request.getInt("user_id");
++        int schedule_id = request.getInt("id");
+ 
+-        FlightOption flightOption=new FlightOption();
+-        String dept_city=request.getString("depart_city");
+-        String arv_city=request.getString("final_city");
+-        int via_city_number=request.getInt("via_city_number");
+-        String start_date=request.getString("depart_date");
+-        String end_date=request.getString("final_date");
+-        int user_id=request.getInt("user_id");
+-        int schedule_id=request.getInt("id");
+ 
+         //航班选项
+ 
+@@ -106,86 +95,93 @@ public class AlgorithmController {
+ //            flightOption.seat_type.add(jsonObject.getString("seat_type"));
+ //        }
+ 
+-        flightOption.isstop=request.getString("isstop");
+-        flightOption.flight_day=request.getString("flight_day");
+-        flightOption.ontime_rate=request.getString("ontime_rate");
+-        flightOption.earliest_dept_time=request.getString("earliest_dept_hour")+":"+request.getString("earliest_dept_minute");
++        flightOption.isstop = request.getString("isstop");
++        flightOption.flight_day = request.getString("flight_day");
++        flightOption.ontime_rate = request.getString("ontime_rate");
++        flightOption.earliest_dept_time = request.getString("earliest_dept_hour") + ":" + request.getString("earliest_dept_minute");
+ //        flightOption.earliest_dept_time= formatdate(request.getString("earliest_dept_time"));
+-        flightOption.latest_arv_time=request.getString("latest_arv_hour")+":"+request.getString("latest_arv_minute");
++        flightOption.latest_arv_time = request.getString("latest_arv_hour") + ":" + request.getString("latest_arv_minute");
+ //        flightOption.latest_arv_time= formatdate(request.getString("latest_arv_time"));
+ 
+         //酒店选项
+-        HotelOption hotelOption=new HotelOption();
+-        hotelOption.lowest_price=request.getString("lowest_price");
+-        hotelOption.highest_price=request.getString("highest_price");
+-        hotelOption.hotel_score=request.getString("hotel_score");
+-        hotelOption.user_recommend=request.getString("user_recommend");
+-        hotelOption.user_number=Integer.toString((int)(request.getDouble("user_number")*100));
+-        if(!request.getString("hotel_type").equals("无要求"))hotelOption.hotel_type.add(request.getString("hotel_type"));
+-        if(request.getInt("hotel_star")>2){
+-            int hotel_star=request.getInt("hotel_star");
+-            for (int i=hotel_star;i<=5;++i){
+-                switch (i){
++        HotelOption hotelOption = new HotelOption();
++        hotelOption.lowest_price = request.getString("lowest_price");
++        hotelOption.highest_price = request.getString("highest_price");
++        hotelOption.hotel_score = request.getString("hotel_score");
++        hotelOption.user_recommend = request.getString("user_recommend");
++        hotelOption.user_number = Integer.toString((int) (request.getDouble("user_number") * 100));
++        if (!request.getString("hotel_type").equals("无要求")) hotelOption.hotel_type.add(request.getString("hotel_type"));
++        System.out.println(request.getString("hotel_type") + " " + request.getString("hotel_type").equals("无要求"));
++        if (request.getInt("hotel_star") > 2) {
++            int hotel_star = request.getInt("hotel_star");
++            for (int i = hotel_star; i <= 5; ++i) {
++                switch (i) {
+ //                    case 1:hotelOption.hotel_star.add("一星级");break;
+ //                    case 2:hotelOption.hotel_star.add("二星级");break;
+-                    case 3:hotelOption.hotel_star.add("三星级");break;
+-                    case 4:hotelOption.hotel_star.add("四星级");break;
+-                    case 5:hotelOption.hotel_star.add("五星级");break;
++                    case 3:
++                        hotelOption.hotel_star.add("三星级");
++                        break;
++                    case 4:
++                        hotelOption.hotel_star.add("四星级");
++                        break;
++                    case 5:
++                        hotelOption.hotel_star.add("五星级");
++                        break;
+                 }
+             }
+         }
+ 
+-        jsonArray=request.getJSONArray("cities");
++        jsonArray = request.getJSONArray("cities");
+         city.add(dept_city);
+         time.add(0);
+-        String flag="";
+-        int total_time=0;
+-        for (int i=0;i<jsonArray.size();++i){
+-            JSONObject jsonObject=jsonArray.getJSONObject(i);
+-            String city_name=jsonObject.getString("city_name");
+-            int stay_days=jsonObject.getInt("stay_days");
+-            for (int j=0;j<city.size();++j){
++        String flag = "";
++        int total_time = 0;
++        for (int i = 0; i < jsonArray.size(); ++i) {
++            JSONObject jsonObject = jsonArray.getJSONObject(i);
++            String city_name = jsonObject.getString("city_name");
++            int stay_days = jsonObject.getInt("stay_days");
++            for (int j = 0; j < city.size(); ++j) {
+                 if (city.get(j).equals(city_name)) {
+-                    if (time.get(j)!=stay_days){
+-                        flag="输入途经城市信息有误！";
++                    if (time.get(j) != stay_days) {
++                        flag = "输入途经城市信息有误！";
+                         break;
+-                    }
+-                    else {
+-                        flag="输入途经城市信息有重复！";
++                    } else {
++                        flag = "输入途经城市信息有重复！";
+                         continue;
+                     }
+                 }
+             }
+-            if(flag.equals("")){
++            if (flag.equals("")) {
+                 city.add(city_name);
+                 time.add(stay_days);
+-                total_time=total_time+stay_days;
++                total_time = total_time + stay_days;
+             }
+         }
+ 
+-        for (int i=1;i<city.size();++i){
+-            if (arv_city.equals(city.get(i))){
+-                flag="输入途经城市信息有误！";
++        for (int i = 1; i < city.size(); ++i) {
++            if (arv_city.equals(city.get(i))) {
++                flag = "输入途经城市信息有误！";
+                 break;
+             }
+         }
+-        if (city.size()==1&&arv_city.equals(city.get(0)))flag="输入途经城市信息有误！";
+-        if (flag.equals(""))city.add(arv_city);
++        if (city.size() == 1 && arv_city.equals(city.get(0))) flag = "输入途经城市信息有误！";
++        if (flag.equals("")) city.add(arv_city);
+         time.add(0);
+         int day = count.CountDay(start_date, end_date) + 1;
+-        if (total_time>day)flag="输入出行时间有误！";
++        if (total_time > day) flag = "输入出行时间有误！";
+ 
+         if (flag.equals("")) {
+             JSONObject result = algorithm.main(start_date, end_date, city, time, flightOption, hotelOption, user_id, schedule_id);
++//            System.out.println("生产了个'" + result.toString() + "'");
++            producer.main(result.toString());
++        } else {
++            JSONObject result = new JSONObject();
++            result.put("user_id", new Integer(user_id));
++            result.put("schedule_id", new Integer(schedule_id));
++            result.put("error", flag);
++            result.put("min_cost", new Integer(0));
++            result.put("result_num", new Integer(0));
+             producer.main(result.toString());
+-        }
+-        else {
+-            JSONObject result=new JSONObject();
+-            result.put("user_id",new Integer(user_id));
+-            result.put("schedule_id",new Integer(schedule_id));
+-            result.put("error",flag);
+-            result.put("min_cost",new Integer(0));
+-            result.put("result_num",new Integer(0));
+         }
+     }
+ 
+diff --git a/src/main/java/com/innovation/journeyplanning/service/Algorithm.java b/src/main/java/com/innovation/journeyplanning/service/Algorithm.java
+index 55604f7..4da2dfe 100644
+--- a/src/main/java/com/innovation/journeyplanning/service/Algorithm.java
++++ b/src/main/java/com/innovation/journeyplanning/service/Algorithm.java
+@@ -6,151 +6,277 @@ import net.sf.json.JSONObject;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Component;
+ 
++import javax.persistence.criteria.CriteriaBuilder;
+ import java.text.ParseException;
+ import java.util.ArrayList;
+ import java.util.Scanner;
+ 
+ @Component
+ public class Algorithm {
+-	
++
+ 	private Integer[] time;
+ 	private Float[][] f;
+-	private Float[][][]cost;
++	private Float[][][] cost;
+ 	private ArrayList<Integer> last[][];
+ 	private ArrayList<Integer> first[][];
+-	private ArrayList a;
+-	private ArrayList<Integer>end_day;
+-	private int dd=0;
+-	private int m=0;
++	private ArrayList<ArrayList<Integer>> path[][];
++//	private ArrayList a;
++	private ArrayList<Integer> end_day;
++	private int dd = 0;
++	private int m = 0;
+ 	private int result_num;
+ 	private Result count_result;
+-	private ArrayList<Flight>flights[][][];
+-	private ArrayList<Hotel>hotels[][];
++	private ArrayList<Flight> flights[][][];
++	private ArrayList<Hotel> hotels[][];
+ 	@Autowired
+ 	private Count count;
+ 	private JSONObject result;
+ 	private JSONArray jsonObject_result;
+ 
+-	public void print(int d,int status,ArrayList<String>city_list,ArrayList<Integer>time_list)
+-	{
++	public void print1(int d, int status, ArrayList<String> city_list, ArrayList<Integer> time_list) {
++//
++//		if (status == 0) {
++//			jsonObject_result = new JSONArray();
++//			for (int i = a.size() - 1; i > 0; --i) System.out.print(city_list.get((int) a.get(i)) + "->");
++//			System.out.println(city_list.get((int) a.get(0)));
++//			for (int i = a.size() - 1; i > 0; --i) {
++//				JSONObject jsonObject_plan = new JSONObject();
++//				JSONArray jsonArray_f = new JSONArray();
++//				JSONArray jsonArray_h = new JSONArray();
++//				String date = "";
++//				System.out.println(cost[m][(int) a.get(i)][(int) a.get(i - 1)]);
++//				for (int j = 0; j < flights[m][(int) a.get(i)][(int) a.get(i - 1)].size(); ++j) {
++//					Flight f = flights[m][(int) a.get(i)][(int) a.get(i - 1)].get(j);
++//					JSONObject jsonObject_f = JSONObject.fromObject(f);
++//					jsonArray_f.add(j, jsonObject_f);
++//					date = f.getDept_date();
++//					System.out.println(f.getFlight_id() + " " + f.getDept_date() + " " + f.getDept_city() + " " + f.getArv_city() + " " + f.getPrice());
++//				}
++//				for (int j = 0; j < hotels[m][(int) a.get(i - 1)].size(); ++j) {
++//					Hotel h = hotels[m][(int) a.get(i - 1)].get(j);
++//					if (time_list.get(((int) a.get(i - 1))) != 0) {
++//						JSONObject jsonObject_h = JSONObject.fromObject(h);
++//						jsonArray_h.add(j, jsonObject_h);
++//						date = h.getCome_date();
++//						System.out.println(h.getHotel_city() + " " + h.getHotel_name() + " " + h.getCome_date() + " " + h.getHotel_price());
++//					}
++//				}
++//				jsonObject_plan.put("cost", new Float(cost[m][(int) a.get(i)][(int) a.get(i - 1)]));
++//				jsonObject_plan.put("flight", jsonArray_f);
++//				jsonObject_plan.put("hotel", jsonArray_h);
++//				jsonObject_plan.put("date", date);
++//				jsonObject_result.add(jsonObject_plan);
++//				m = m + time[1 << (int) a.get(i - 1)];
++//			}
++//			++result_num;
++//			result.put("plan" + Integer.toString(result_num), jsonObject_result);
++//			return;
++//		}
++//		for (int i = 0; i < last[dd][status].size(); ++i) {
++//			a.add(last[dd][status].get(i));
++//			m = dd;
++//			int mm = dd;
++//			dd = dd - time[1 << last[dd][status].get(i)];
++//			//status=status^(1<<last[m][status].get(i));
++//			print(dd, status ^ (1 << last[m][status].get(i)), city_list, time_list);
++//			//status=status^(1<<last[mm][status].get(i));
++//			dd = dd + time[1 << last[mm][status].get(i)];
++//			a.remove(a.size() - 1);
++//		}
++	}
+ 
+-		if (status==0) {
+-			jsonObject_result=new JSONArray();
+-			for (int i=a.size()-1;i>0;--i)System.out.print(city_list.get((int)a.get(i))+"->");
+-			System.out.println(city_list.get((int)a.get(0)));
+-			for (int i=a.size()-1;i>0;--i) {
+-				JSONObject jsonObject_plan=new JSONObject();
+-				JSONArray jsonArray_f=new JSONArray();
+-				JSONArray jsonArray_h=new JSONArray();
+-				String date="";
+-				System.out.println(cost[m][(int) a.get(i)][(int) a.get(i-1)]);
+-				for (int j=0;j<flights[m][(int)a.get(i)][(int)a.get(i-1)].size();++j){
+-					Flight f=flights[m][(int)a.get(i)][(int)a.get(i-1)].get(j);
+-					JSONObject jsonObject_f=JSONObject.fromObject(f);
+-					jsonArray_f.add(j,jsonObject_f);
+-					date=f.getDept_date();
+-					System.out.println(f.getFlight_id()+" "+f.getDept_date()+" "+f.getDept_city()+" "+f.getArv_city()+" "+f.getPrice());
++	public void print(int m, ArrayList<String> city_list, ArrayList<Integer> time_list) {
++		int city=city_list.size();
++		int d=m-time[(1<<city)-1];
++		for (int k=0;k<path[m][(1<<city)-1].size();++k) {
++			ArrayList<Integer>a=path[m][(1<<city)-1].get(k);
++			jsonObject_result = new JSONArray();
++			for (int i = 0; i <a.size()-1; ++i) System.out.print(city_list.get((int) a.get(i)) + "->");
++			System.out.println(city_list.get((int) a.get(a.size()-1)));
++			for (int i = 0; i < a.size()-1; ++i) {
++				JSONObject jsonObject_plan = new JSONObject();
++				JSONArray jsonArray_f = new JSONArray();
++				JSONArray jsonArray_h = new JSONArray();
++				String date = "";
++				System.out.println(cost[d][(int) a.get(i)][(int) a.get(i + 1)]);
++				for (int j = 0; j < flights[d][(int) a.get(i)][(int) a.get(i + 1)].size(); ++j) {
++					Flight f = flights[d][(int) a.get(i)][(int) a.get(i + 1)].get(j);
++					JSONObject jsonObject_f = JSONObject.fromObject(f);
++					jsonArray_f.add(j, jsonObject_f);
++					date = f.getDept_date();
++					System.out.println(f.getFlight_id() + " " + f.getDept_date() + " " + f.getDept_city() + " " + f.getArv_city() + " " + f.getPrice());
+ 				}
+-				for (int j=0;j<hotels[m][(int)a.get(i-1)].size();++j){
+-					Hotel h=hotels[m][(int)a.get(i-1)].get(j);
+-					if (time_list.get(((int)a.get(i-1)))!=0) {
+-						JSONObject jsonObject_h=JSONObject.fromObject(h);
+-						jsonArray_h.add(j,jsonObject_h);
+-						date=h.getCome_date();
++				for (int j = 0; j < hotels[d][(int) a.get(i + 1)].size(); ++j) {
++					Hotel h = hotels[d][(int) a.get(i + 1)].get(j);
++					if (time_list.get(((int) a.get(i + 1))) != 0) {
++						JSONObject jsonObject_h = JSONObject.fromObject(h);
++						jsonArray_h.add(j, jsonObject_h);
++						date = h.getCome_date();
+ 						System.out.println(h.getHotel_city() + " " + h.getHotel_name() + " " + h.getCome_date() + " " + h.getHotel_price());
+ 					}
+ 				}
+-				jsonObject_plan.put("cost",new Float(cost[m][(int) a.get(i)][(int) a.get(i-1)]));
+-				jsonObject_plan.put("flight",jsonArray_f);
+-				jsonObject_plan.put("hotel",jsonArray_h);
+-				jsonObject_plan.put("date",date);
++				jsonObject_plan.put("cost", new Float(cost[m][(int) a.get(i)][(int) a.get(i + 1)]));
++				jsonObject_plan.put("flight", jsonArray_f);
++				jsonObject_plan.put("hotel", jsonArray_h);
++				jsonObject_plan.put("date", date);
+ 				jsonObject_result.add(jsonObject_plan);
+-				m=m+time[1<<(int) a.get(i-1)];
++				d=d+time[1<<(int) a.get(i+1)];
+ 			}
+ 			++result_num;
+-			result.put("plan"+Integer.toString(result_num),jsonObject_result);
++			result.put("plan" + Integer.toString(result_num), jsonObject_result);
+ 			return;
+ 		}
+-		for (int i=0;i<last[dd][status].size();++i) {
+-			a.add(last[dd][status].get(i));
+-			m=dd;
+-			int mm=dd;
+-			dd=dd-time[1<<last[dd][status].get(i)];
+-			//status=status^(1<<last[m][status].get(i));
+-			print(dd,status^(1<<last[m][status].get(i)),city_list,time_list);
+-			//status=status^(1<<last[mm][status].get(i));
+-			dd=dd+time[1<<last[mm][status].get(i)];
+-			a.remove(a.size()-1);
+-		}
+ 	}
+-	
+-	public void solve(int day,int city) {
+-		f=new Float[day][1<<city];
+-		for (int i=0;i<day;++i) {
+-			for (int j=0;j<1<<city;++j) {
+-				f[i][j]=(float)(1<<30);
+-				last[i][j].add(-1);
+-				first[i][j].add(-1);
+-				if (j==1) {
+-					f[i][j]=(float)0;
+-					first[i][j].set(0,0);
+-					last[i][j].set(0, 0);
+-				}
+-			}
+-			for (int j=0;j<city;++j) {
+-				f[i][1<<j]=(float)0;
+-				first[i][1<<j].set(0, j);
+-				last[i][1<<j].set(0, j);
+-			}
+-		}
+-		for (int i=1;i<1<<(city-1);++i) {
+-//			if ((i&1)==0)continue;
+-			for (int j=0;j<day-1;++j) {
+-//				for (int k=1;k<city;++k) {
+-//					int m=i^(1<<k);
+-//					if (k==city-1&&m!=(1<<city)-1)continue;
+-//					if (m>i&&last[j][i].get(0)!=-1&&j+time[1<<k]<day) {
+-//						for (int l=0;l<last[j][i].size();++l) {
+-//							if (f[j+time[1<<k]][m]>f[j][i]+cost[j][last[j][i].get(l)][k]) {
+-//								f[j+time[1<<k]][m]=f[j][i]+cost[j][last[j][i].get(l)][k];
+-//							    first[j+time[1<<k]][m].clear();
+-//							    first[j+time[1<<k]][m].add(first[j][i].get(l));
+-//							    last[j+time[1<<k]][m].clear();
+-//							    last[j+time[1<<k]][m].add(k);
+-//						    }
+-//							else if (f[j+time[1<<k]][m]==f[j][i]+cost[j][last[j][i].get(l)][k]) {
+-//								first[j+time[1<<k]][m].add(first[j][i].get(l));
+-//								last[j+time[1<<k]][m].add(k);
++
++	public void solve1(int day,int city) {
++//		f=new Float[day][1<<city];
++//		last=new ArrayList[day][1<<city];
++//		first=new ArrayList[day][1<<city];
++//		path=new ArrayList[day][1<<city];
++//		for (int i=0;i<day;++i)
++//			for (int j=0;j<(1<<city);++j) {
++//				last[i][j]=new ArrayList<Integer>();
++//				first[i][j]=new ArrayList<Integer>();
++//				path[i][j]=new ArrayList<ArrayList<Integer>>();
++//			}
++//		for (int i=0;i<day;++i) {
++//			for (int j=0;j<1<<city;++j) {
++//				f[i][j]=(float)(1<<30);
++//				last[i][j].add(-1);
++//				first[i][j].add(-1);
++//				if (j==1) {
++//					f[i][j]=(float)0;
++//					first[i][j].set(0,0);
++//					last[i][j].set(0, 0);
++//				}
++//			}
++//			for (int j=0;j<city;++j) {
++//				f[i][1<<j]=(float)0;
++//				first[i][1<<j].set(0, j);
++//				last[i][1<<j].set(0, j);
++//			}
++//		}
++//		for (int i=1;i<1<<(city-1);++i) {
++////			if ((i&1)==0)continue;
++//			for (int j=0;j<day-1;++j) {
++////				for (int k=1;k<city;++k) {
++////					int m=i^(1<<k);
++////					if (k==city-1&&m!=(1<<city)-1)continue;
++////					if (m>i&&last[j][i].get(0)!=-1&&j+time[1<<k]<day) {
++////						for (int l=0;l<last[j][i].size();++l) {
++////							if (f[j+time[1<<k]][m]>f[j][i]+cost[j][last[j][i].get(l)][k]) {
++////								f[j+time[1<<k]][m]=f[j][i]+cost[j][last[j][i].get(l)][k];
++////							    first[j+time[1<<k]][m].clear();
++////							    first[j+time[1<<k]][m].add(first[j][i].get(l));
++////							    last[j+time[1<<k]][m].clear();
++////							    last[j+time[1<<k]][m].add(k);
++////						    }
++////							else if (f[j+time[1<<k]][m]==f[j][i]+cost[j][last[j][i].get(l)][k]) {
++////								first[j+time[1<<k]][m].add(first[j][i].get(l));
++////								last[j+time[1<<k]][m].add(k);
++////							}
++////						}
++////					}
++////				}
++////				if((i&(1<<(city-1)))!=0)continue;
++//				for (int k=1;k<1<<city;++k) {
++//					if ((i&k)!=0||(k&1)==1)continue;
++//					int m=i^k;
++//					if (m==15){
++//						int x=0;
++//					}
++//					if (last[j][i].get(0)!=-1&&j+time[k]<day) {
++//						for (int l1=0;l1<last[j][i].size();++l1)
++//						for (int l2=0;l2<first[j+time[k]][k].size();++l2){
++//							if (last[j][i].get(l1)!=-1&&first[j+time[k]][k].get(l2)!=-1) {
++//								if (f[j+time[k]][m]>f[j][i]+f[j+time[k]][k]+cost[j][last[j][i].get(l1)][first[j+time[k]][k].get(l2)]) {
++//									f[j+time[k]][m]=f[j][i]+f[j+time[k]][k]+cost[j][last[j][i].get(l1)][first[j+time[k]][k].get(l2)];
++//									first[j+time[k]][m].clear();
++//									first[j+time[k]][m].add(first[j][i].get(l1));
++//									last[j+time[k]][m].clear();
++//									last[j+time[k]][m].add(last[j+time[k]][k].get(l2));
++//
++//									System.out.println("第"+Integer.toString(j+time[k])+"天状态"+Integer.toString(m)+"由第"+Integer.toString(j)+"天状态"+Integer.toString(i)+"和第"+Integer.toString(j+time[k])+"天状态"+Integer.toString(k)+"组成\n");
++//								}
++//								else if (Math.abs(f[j+time[k]][m]-f[j][i]+f[j+time[k]][k]+cost[j][last[j][i].get(l1)][first[j+time[k]][k].get(l2)])<=0) {
++//									boolean flag=true;
++//									for (int l3=0;l3<first[j+time[k]][m].size();++l3){
++//										if (first[j+time[k]][m].get(l3)==first[j][i].get(l1)&&last[j + time[k]][m].get(l3)==last[j + time[k]][k].get(l2)){
++//											flag=false;
++//											break;
++//										}
++//									}
++//									if (flag) {
++//										first[j + time[k]][m].add(first[j][i].get(l1));
++//										last[j + time[k]][m].add(last[j + time[k]][k].get(l2));
++//									}
++//								}
+ //							}
+ //						}
+ //					}
+ //				}
+-//				if((i&(1<<(city-1)))!=0)continue;
+-				for (int k=1;k<1<<city;++k) {
+-					if ((i&k)!=0||(k&1)==1)continue;
+-					int m=i^k;
+-					if (last[j][i].get(0)!=-1&&j+time[k]<day) {
+-						for (int l1=0;l1<last[j][i].size();++l1) 
+-						for (int l2=0;l2<first[j+time[k]][k].size();++l2){
+-							if (last[j][i].get(l1)!=-1&&first[j+time[k]][k].get(l2)!=-1) {
+-								if (f[j+time[k]][m]>f[j][i]+f[j+time[k]][k]+cost[j][last[j][i].get(l1)][first[j+time[k]][k].get(l2)]) {
+-									f[j+time[k]][m]=f[j][i]+f[j+time[k]][k]+cost[j][last[j][i].get(l1)][first[j+time[k]][k].get(l2)];
+-									first[j+time[k]][m].clear();
+-									first[j+time[k]][m].add(first[j][i].get(l1));
+-									last[j+time[k]][m].clear();
+-									last[j+time[k]][m].add(last[j+time[k]][k].get(l2));
+-								}
+-								else if (f[j+time[k]][m]==f[j][i]+f[j+time[k]][k]+cost[j][last[j][i].get(l1)][first[j+time[k]][k].get(l2)]) {
+-									boolean flag=true;
+-									for (int l3=0;l3<first[j+time[k]][m].size();++l3){
+-										if (first[j+time[k]][m].get(l3)==first[j][i].get(l1)&&last[j + time[k]][m].get(l3)==last[j + time[k]][k].get(l2)){
+-											flag=false;
++//			}
++//		}
++	}
++
++	public void solve(int day, int city) {
++		f = new Float[day][1 << city];
++		last = new ArrayList[day][1 << city];
++		first = new ArrayList[day][1 << city];
++		path = new ArrayList[day][1 << city];
++		for (int i = 0; i < day; ++i)
++			for (int j = 0; j < (1 << city); ++j) {
++				last[i][j] = new ArrayList<Integer>();
++				first[i][j] = new ArrayList<Integer>();
++				path[i][j] = new ArrayList<ArrayList<Integer>>();
++			}
++		for (int i = 0; i < day; ++i) {
++			for (int j = 0; j < 1 << city; ++j) {
++				f[i][j] = (float) (1 << 30);
++				if (j == 1) {
++					f[i][j] = (float) 0;
++				}
++			}
++			for (int j = 0; j < city; ++j) {
++				f[i][1 << j] = (float) 0;
++				ArrayList<Integer> p = new ArrayList<Integer>();
++				p.add(j);
++				path[i][1<<j].add(p);
++			}
++		}
++		for (int i = 1; i < 1 << (city - 1); ++i) {
++			for (int j = 0; j < day - 1; ++j) {
++				for (int k = 1; k < 1 << city; ++k) {
++					if ((i & k) != 0 || (k & 1) == 1) continue;
++					int m = i ^ k;
++					for (int l1 = 0; l1 < path[j][i].size(); ++l1) {
++						if (j + time[k] < day) {
++							for (int l2 = 0; l2 < path[j + time[k]][k].size(); ++l2) {
++								if (f[j + time[k]][m] > f[j][i] + f[j + time[k]][k] + cost[j][path[j][i].get(l1).get(path[j][i].get(l1).size() - 1)][path[j + time[k]][k].get(l2).get(0)]) {
++									f[j + time[k]][m] = f[j][i] + f[j + time[k]][k] + cost[j][path[j][i].get(l1).get(path[j][i].get(l1).size() - 1)][path[j + time[k]][k].get(l2).get(0)];
++									path[j + time[k]][m].clear();
++									ArrayList<Integer> p = new ArrayList<Integer>();
++									for (int m1 = 0; m1 < path[j][i].get(l1).size(); ++m1)
++										p.add(path[j][i].get(l1).get(m1));
++									for (int m2 = 0; m2 < path[j + time[k]][k].get(l2).size(); ++m2)
++										p.add(path[j + time[k]][k].get(l2).get(m2));
++									path[j + time[k]][m].add(p);
++//									System.out.println("第" + Integer.toString(j + time[k]) + "天状态" + Integer.toString(m) + "由第" + Integer.toString(j) + "天状态" + Integer.toString(i) + "和第" + Integer.toString(j + time[k]) + "天状态" + Integer.toString(k) + "组成\n");
++								} else if (Math.abs(f[j + time[k]][m] - f[j][i] + f[j + time[k]][k] + cost[j][path[j][i].get(l1).get(path[j][i].get(l1).size() - 1)][path[j + time[k]][k].get(l2).get(0)]) <= 0) {
++									ArrayList<Integer> p = new ArrayList<Integer>();
++									for (int m1 = 0; m < path[j][i].get(l1).size(); ++m1)
++										p.add(path[j][i].get(l1).get(m1));
++									for (int m2 = 0; m < path[j + time[k]][k].get(l2).size(); ++m2)
++										p.add(path[j][i].get(l1).get(m2));
++									boolean flag = true;
++									for (int l3 = 0; l3 < path[j + time[k]][m].size(); ++l3) {
++										if (path[j + time[k]][m].get(l3).equals(p)) {
++											flag = false;
+ 											break;
+ 										}
+ 									}
+ 									if (flag) {
+-										first[j + time[k]][m].add(first[j][i].get(l1));
+-										last[j + time[k]][m].add(last[j + time[k]][k].get(l2));
++										path[j + time[k]][m].add(p);
+ 									}
+ 								}
+ 							}
+@@ -160,6 +286,7 @@ public class Algorithm {
+ 			}
+ 		}
+ 	}
++
+ 	static int min(int a,int b) {
+ 		if (a<b)return a;
+ 		else return b;
+@@ -174,12 +301,10 @@ public class Algorithm {
+ 		cost=new Float[day][city][city];
+ 		flights=new ArrayList[day][city][city];
+ 		hotels=new ArrayList[day][city];
+-		last=new ArrayList[day][1<<city];
+-		first=new ArrayList[day][1<<city];
+ 		result_num=0;
+ 		end_day=new ArrayList<>();
+-		a=new ArrayList();
+-		a.add(city-1);
++//		a=new ArrayList();
++//		a.add(city-1);
+ 		for (int i=0;i<city;++i)time[i]=time_list.get(i);
+ 		long data_start_time=System.nanoTime();
+ 		count_result=count.CountCost(start_date,end_date,city_list,time_list,flightOption,hotelOption);
+@@ -187,11 +312,6 @@ public class Algorithm {
+ 		cost=count_result.cost;
+ 		flights=count_result.flights;
+ 		hotels=count_result.hotels;
+-		for (int i=0;i<day;++i)
+-			for (int j=0;j<(1<<city);++j) {
+-				last[i][j]=new ArrayList<Integer>();
+-				first[i][j]=new ArrayList<Integer>();
+-			}
+ 
+ 		for (int i=city;i<1<<city;++i)time[i]=0;
+ 		for (int i=city;i<1<<city;++i)
+@@ -216,28 +336,55 @@ public class Algorithm {
+ 		solve(day,city);
+ 		long solve_end_time=System.nanoTime();
+ 		Float min=(float)(1<<30);
+-		
++
+ 		for (int i=0;i<day;++i) {
+ 			if (min>f[i][(1<<city)-1]) {
+ 				min=f[i][(1<<city)-1];
+ 				end_day.clear();
+ 				end_day.add(i);
+ 			}
+-			else if (min==f[i][(1<<city)-1]&&min!=(float)(1<<30))end_day.add(i);
++			else {
++				if (Math.abs(min-f[i][(1<<city)-1])<=0&&min!=(float)(1<<30)){
++					end_day.add(i);
++				}
++			}
++		}
++		if (Math.abs(min-(float)(1<<30))<=0){
++			for (int i=0;i<day;++i){
++				for (int j=0;j<city_list.size()-1;++j){
++					for (int k=j+1;k<city_list.size();++k){
++						if (city_list.get(j)!=city_list.get(k)&&flights[i][j][k].get(0).getPrice()==(float)(1<<30)){
++							flights[i][j][k].get(0).setPrice(0);
++							cost[i][j][k]=hotels[i][k].get(0).getHotel_price()*time_list.get(k);
++						}
++						if (!(j==0||k==city_list.size()-1||city_list.get(j)==city_list.get(k))&&flights[i][j][k].get(0).getPrice()==(float)(1<<30)){
++							flights[i][k][j].get(0).setPrice(0);
++							cost[i][k][j]=hotels[i][j].get(0).getHotel_price()*time_list.get(j);
++						}
++					}
++				}
++			}
++			solve(day,city);
++			solve_end_time=System.nanoTime();
++			for (int i=0;i<day;++i) {
++				if (min>f[i][(1<<city)-1]) {
++					min=f[i][(1<<city)-1];
++					end_day.clear();
++					end_day.add(i);
++				}
++				else if (min==f[i][(1<<city)-1]&&min!=(float)(1<<30))end_day.add(i);
++			}
+ 		}
+-
+ 		result=new JSONObject();
+ 		result.put("user_id", new Integer(user_id));
+ 		result.put("schedule_id", new Integer(schedule_id));
+ 		result.put("min_cost",min);
+ 		System.out.println("最少费用为：" + min);
+ 		for (int i=0;i<end_day.size();++i) {
+-			dd=end_day.get(i);
+-			System.out.println("建议第" + dd + "天结束旅行");
+-			int status = (1 << (city - 1)) - 1;
++			System.out.println("建议第" + (end_day.get(i)-time[(1<<city)-1]) + "天开始旅行");
+ 			System.out.print("最廉价旅游方案为：");
+ 
+-			print(dd, status, city_list, time_list);
++			print(end_day.get(i), city_list, time_list);
+ //			result.put("result"+Integer.toString(i+1), jsonObject_result);
+ //			System.out.println();
+ 		}
+diff --git a/src/main/java/com/innovation/journeyplanning/service/Count.java b/src/main/java/com/innovation/journeyplanning/service/Count.java
+index 8947b20..0658c2d 100644
+--- a/src/main/java/com/innovation/journeyplanning/service/Count.java
++++ b/src/main/java/com/innovation/journeyplanning/service/Count.java
+@@ -2,14 +2,18 @@ package com.innovation.journeyplanning.service;
+ 
+ import com.innovation.journeyplanning.entity.*;
+ import com.innovation.journeyplanning.util.Search;
++import net.sf.json.JSONArray;
++import net.sf.json.JSONObject;
++import org.apache.commons.io.FileUtils;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Component;
++import org.springframework.util.ResourceUtils;
+ 
++import java.io.IOException;
++import java.nio.charset.Charset;
+ import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+-import java.util.ArrayList;
+-import java.util.Calendar;
+-import java.util.Date;
++import java.util.*;
+ 
+ @Component
+ public class Count {
+@@ -24,13 +28,20 @@ public class Count {
+             flights=new ArrayList[day][city.size()][city.size()];
+             hotels=new ArrayList[day][city.size()];
+             cost = new Float[day][city.size()][city.size()];
++
+             //计算符合要求的flight最低价及航班
+             for (int i=0;i<day;++i){
+                 String date=getDate(start_date,i);
+                 for (int j=0;j<city.size()-1;++j){
+                     for (int k=j+1;k<city.size();++k){
+-                        flights[i][j][k]=search.SearchFlight(city.get(j),city.get(k),date,flightOption);
+-                        if (j==0||k==city.size()-1){
++                        if (city.get(j)!=city.get(k))flights[i][j][k]=search.SearchFlight(city.get(j),city.get(k),date,flightOption);
++                        else{
++                            Flight f=new Flight();
++                            flights[i][k][j]=new ArrayList<Flight>();
++                            f.setPrice((float)(1<<30));
++                            flights[i][k][j].add(f);
++                        }
++                        if (j==0||k==city.size()-1||city.get(j)==city.get(k)){
+                             Flight f=new Flight();
+                             flights[i][k][j]=new ArrayList<Flight>();
+                             f.setPrice((float)(1<<30));
+@@ -86,6 +97,7 @@ public class Count {
+ 
+             return new Result(flights,hotels,cost);
+         }catch (ParseException e){}
++//        catch (IOException e){}
+         return null;
+     }
+     public int CountDay(String smdate,String bdate) throws ParseException{
+diff --git a/src/main/java/com/innovation/journeyplanning/util/Search.java b/src/main/java/com/innovation/journeyplanning/util/Search.java
+index 2b25b28..6bdb420 100644
+--- a/src/main/java/com/innovation/journeyplanning/util/Search.java
++++ b/src/main/java/com/innovation/journeyplanning/util/Search.java
+@@ -4,15 +4,17 @@ import com.innovation.journeyplanning.entity.Flight;
+ import com.innovation.journeyplanning.entity.FlightOption;
+ import com.innovation.journeyplanning.entity.Hotel;
+ import com.innovation.journeyplanning.entity.HotelOption;
++import net.sf.json.JSONArray;
++import net.sf.json.JSONObject;
++import org.apache.commons.io.FileUtils;
+ import org.springframework.stereotype.Component;
++import org.springframework.util.ResourceUtils;
+ 
+ import java.sql.*;
+ import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+-import java.util.ArrayList;
+-import java.util.Collections;
++import java.util.*;
+ import java.util.Date;
+-import java.util.Locale;
+ 
+ @Component
+ public class Search {
+@@ -23,15 +25,15 @@ public class Search {
+ //    private String flight_url = "jdbc:mysql://111.231.132.139:3306/Flight?characterEncoding=utf8&useSSL=true";
+ //    private String hotel_url="jdbc:mysql://119.23.41.32:3306/Hotel?characterEncoding=utf8&useSSL=true";
+     //本地数据库
+-    private String flight_url = "jdbc:mysql://localhost:3306/JourneyPlanningMixed?characterEncoding=utf8&useSSL=true";
+-    private String hotel_url="jdbc:mysql://localhost:3306/JourneyPlanningMixed?characterEncoding=utf8&useSSL=true";
++    private String flight_url = "jdbc:mysql://localhost:3306/JourneyPlanning?characterEncoding=utf8&useSSL=true";
++    private String hotel_url="jdbc:mysql://localhost:3306/JourneyPlanning?characterEncoding=utf8&useSSL=true";
+     //本地hive数据库
+ //    private String driver = "com.cloudera.hive.jdbc41.HS1Driver";
+ //    private String flight_url = "jdbc:hive2://192.168.56.101:10000/default";
+ //    private String hotel_url = "jdbc:hive2://192.168.56.101:10000/default";
+     //远程memory数据库
+-//    private String flight_url = "jdbc:mysql://111.231.107.142:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
+-//    private String hotel_url="jdbc:mysql://111.231.107.142:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
++//    private String flight_url = "jdbc:mysql://10.105.48.129:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
++//    private String hotel_url="jdbc:mysql://10.105.48.129:3306/journeyplanning?characterEncoding=utf8&useSSL=true";
+ 
+ 
+     //MySQL配置时的用户名
+@@ -67,6 +69,21 @@ public class Search {
+ //                    return flights;
+ //                }
+ //            }
++
++            //读取city json列表
++            Map<String, String> cityJsonList = new HashMap<>();
++            String CityJsonData = FileUtils.readFileToString(ResourceUtils.
++                    getFile("classpath:city_list.json"), "UTF-8");
++            JSONObject CityJsonObject = JSONObject.fromObject(CityJsonData);
++            JSONArray CityJsonArray = CityJsonObject.getJSONArray("热门");
++            for (int i = 0; i < CityJsonArray.size(); ++i) {
++                JSONObject jsonObject = CityJsonArray.getJSONObject(i);
++                String display = jsonObject.getString("display");
++                String code = jsonObject.getString("code");
++                cityJsonList.put(display, code);
++            }
++
++
+             con = DriverManager.getConnection(flight_url, user, password);
+ //            con=DriverManager.getConnection(flight_url);
+             if (con.isClosed())
+@@ -103,8 +120,8 @@ public class Search {
+             String sql="select ";
+             sql=sql+select+" from flightinfo where "+where+" order by price asc";
+             PreparedStatement stmt = con.prepareStatement(sql);
+-            stmt.setString(1,dept_city);
+-            stmt.setString(2,arv_city);
++            stmt.setString(1,cityJsonList.get(dept_city));
++            stmt.setString(2,cityJsonList.get(arv_city));
+             stmt.setString(3,dept_date);
+ //            if (!flightOption.isstop.equals("")){
+ //                ++num;
+@@ -160,11 +177,13 @@ public class Search {
+                 f.setDept_date(rs.getString("dept_date"));
+                 f.setDept_time(rs.getString("dept_time"));
+                 f.setDept_airport(rs.getString("dept_airport"));
+-                f.setDept_city(rs.getString("dept_city"));
++//                f.setDept_city(rs.getString("dept_city"));
++                f.setDept_city(dept_city);
+                 f.setArv_date(rs.getString("arv_date"));
+                 f.setArv_time(rs.getString("arv_time"));
+                 f.setArv_airport(rs.getString("arv_airport"));
+-                f.setArv_city(rs.getString("arv_city"));
++//                f.setArv_city(rs.getString("arv_city"));
++                f.setArv_city(arv_city);
+                 f.setOntime_rate(rs.getFloat("ontime_rate"));
+ //                f.setSeat_type(rs.getString("seat_type"));
+                 f.setPrice(rs.getFloat("price"));
+@@ -185,11 +204,13 @@ public class Search {
+                         f1.setDept_date(rs.getString("dept_date"));
+                         f1.setDept_time(rs.getString("dept_time"));
+                         f1.setDept_airport(rs.getString("dept_airport"));
+-                        f1.setDept_city(rs.getString("dept_city"));
++//                        f1.setDept_city(rs.getString("dept_city"));
++                        f1.setDept_city(dept_city);
+                         f1.setArv_date(rs.getString("arv_date"));
+                         f1.setArv_time(rs.getString("arv_time"));
+                         f1.setArv_airport(rs.getString("arv_airport"));
+-                        f1.setArv_city(rs.getString("arv_city"));
++//                        f1.setArv_city(rs.getString("arv_city"));
++                        f1.setArv_city(arv_city);
+                         f1.setOntime_rate(rs.getFloat("ontime_rate"));
+ //                    f.setSeat_type(rs.getString("seat_type"));
+                         f1.setPrice(rs.getFloat("price"));
+@@ -219,6 +240,9 @@ public class Search {
+         else {
+             Flight f=new Flight();
+             f.setPrice((float)(1<<30));
++            f.setDept_city(dept_city);
++            f.setArv_city(arv_city);
++            f.setDept_date(dept_date);
+             flights.add(f);
+             return flights;
+         }
